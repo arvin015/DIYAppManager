@@ -54,6 +54,7 @@
     <string name="delete_text">刪除</string>
     <string name="selected_size_text">選中大小 </string>
     <string name="back_text">返回</string>
+    <string name="no_subject_selected_text">請選擇需要刪除的對象！</string>
     <string name="deleted_text">已下載</string>
 
     <string name="install_app_first">請先安裝 %s 應用程序！</string>

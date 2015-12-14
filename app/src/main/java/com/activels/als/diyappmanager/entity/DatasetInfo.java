@@ -1,6 +1,7 @@
 package com.activels.als.diyappmanager.entity;
 
 import com.activels.als.diyappmanager.utils.StringUtil;
+import com.activels.als.diyappmanager.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -29,6 +30,7 @@ public class DatasetInfo implements Serializable {
     private String size;    //大小
     private String covertDate;//格式化时间
 
+    private int typeIndex;//类型索引
     private int operateState; //当前状态 0：未下载；1：下载中；2：下载完成，解压中；3：解压完成；4：有更新
     private int finished;//下载完成百分比
     private int totalLength;//总长度
@@ -66,12 +68,13 @@ public class DatasetInfo implements Serializable {
         this.icon = json.optString("icon");
         this.info = json.optString("info");
         this.date = json.optString("date");
-        this.type = json.optString("type");
+        this.type = Utils.TYPES[json.optInt("type")];
         this.link = json.optString("link");
         this.md5 = json.optString("md5");
         this.totalLength = json.optInt("size");
         this.size = StringUtil.bytes2mb(json.optInt("size"));
 
+        this.typeIndex = json.optInt("type");
         this.covertDate = StringUtil.convertTimeStumpToDate(date);
         this.zipDatasetName = link.substring(link.lastIndexOf("/") + 1);
         this.datasetName = zipDatasetName.substring(0, zipDatasetName.lastIndexOf("."));
@@ -244,6 +247,14 @@ public class DatasetInfo implements Serializable {
 
     public void setIsChecked(boolean isChecked) {
         this.isChecked = isChecked;
+    }
+
+    public int getTypeIndex() {
+        return typeIndex;
+    }
+
+    public void setTypeIndex(int typeIndex) {
+        this.typeIndex = typeIndex;
     }
 
     /**

@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.activels.als.diyappmanager.entity.DatasetInfo;
 import com.activels.als.diyappmanager.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 文件数据访问接口实现类
@@ -74,12 +74,19 @@ public class DatasetDaoImpl implements DatasetDao {
     }
 
     @Override
-    public List<DatasetInfo> getAllDownloadedDataset() {
+    public List<DatasetInfo> getAllDownloadedDataset(String type) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from dataset_info where state > ?", new String[]{Utils.STATE_DOWNLOAGING + ""});
 
-        List<DatasetInfo> infoList = new CopyOnWriteArrayList<>();
+        Cursor cursor;
+
+        if (Utils.TYPES[0].equals(type)) {
+            cursor = db.rawQuery("select * from dataset_info where state > ?", new String[]{Utils.STATE_DOWNLOAGING + ""});
+        } else {
+            cursor = db.rawQuery("select * from dataset_info where state > ? and type = ?", new String[]{Utils.STATE_DOWNLOAGING + "", type});
+        }
+
+        List<DatasetInfo> infoList = new ArrayList<>();
 
         while (cursor.moveToNext()) {
 

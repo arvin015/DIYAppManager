@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +54,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class MainActivity extends BaseActivity {
@@ -83,8 +81,13 @@ public class MainActivity extends BaseActivity {
     private DatasetAdapter datasetAdapter;
     private DownloadedAdapter downloadedAdapter;
 
+    //一般模式
     public int selectTypeIndex = 0; //选中的类型索引
     public int selectSortIndex = 0; //当前选中排序索引
+
+    //删除模式
+    public int dSelectTypeIndex = 0;//选中的类型索引
+    public int dSelectSortIndex = 0;//当前选中排序索引
 
     private int totalCount = 0; //总条数
     private int currentPage = 1;//当前页数
@@ -248,6 +251,7 @@ public class MainActivity extends BaseActivity {
 
                         float size = Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("M")));
                         batchDeleteHelper.countSize(info.isChecked() ? size : -(size));
+                        batchDeleteHelper.countSize(info.isChecked() ? size : -(size));
                     }
                 }
             }
@@ -305,12 +309,12 @@ public class MainActivity extends BaseActivity {
         setBtnVisibility(View.GONE);
 
         if (downloadedDatasetList == null) {
-            downloadedDatasetList = new CopyOnWriteArrayList<>();
+            downloadedDatasetList = new ArrayList<>();
         }
         downloadedDatasetList.clear();
 
         if (deletedDatasetList == null) {
-            deletedDatasetList = new CopyOnWriteArrayList<>();
+            deletedDatasetList = new ArrayList<>();
         }
         deletedDatasetList.clear();
 
@@ -319,12 +323,13 @@ public class MainActivity extends BaseActivity {
         float totalSize = 0; //已下载完成的dataset总大小
 
         if (mDatasetDao != null) {
-            downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset());
+            downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset(Utils.TYPES[0]));
 
             for (DatasetInfo info : downloadedDatasetList) {
                 info.setIsChecked(false);
                 totalSize += Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("M")));
             }
+
         }
 
         downloadedGridView.setVisibility(View.VISIBLE);
@@ -356,7 +361,6 @@ public class MainActivity extends BaseActivity {
 
                 @Override
                 public void onDeleteClick() {
-
                     deleteDownloadedDataset();
                 }
             });
@@ -666,7 +670,7 @@ public class MainActivity extends BaseActivity {
 
         popup = PopupWindowUtil.getInstance();
         popup.setPopupWindowSize(DisplayUtil.dip2px(300),
-                type == 1 ? DisplayUtil.dip2px(335) : DisplayUtil.dip2px(100));
+                type == 1 ? DisplayUtil.dip2px(280) : DisplayUtil.dip2px(100));
 
         View view = LayoutInflater.from(context).inflate(R.layout.popup_type, null);
         final ListView listView = (ListView) view.findViewById(R.id.typeList);
@@ -677,9 +681,9 @@ public class MainActivity extends BaseActivity {
 
         if (type == 2) {
             popupTitle.setVisibility(View.GONE);
-            typeAdapter.setSelectedIndex(selectSortIndex);
+            typeAdapter.setSelectedIndex(mode == 0 ? selectSortIndex : dSelectSortIndex);
         } else {
-            typeAdapter.setSelectedIndex(selectTypeIndex);
+            typeAdapter.setSelectedIndex(mode == 0 ? selectTypeIndex : dSelectTypeIndex);
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -688,24 +692,57 @@ public class MainActivity extends BaseActivity {
 
                 popup.dismiss();
 
-                if (type == 1) {
+                if (type == 1) {//分类
 
                     typeBtn.setText(strs[i]);
-                    selectTypeIndex = i;
+                    if (mode == 0) {//一般模式
+                        selectTypeIndex = i;
 
-                    refreshHanlde();
+                        refreshHanlde();
 
-                } else {
+                    } else {
 
-                    if (i == selectSortIndex) {
+                        if (dSelectTypeIndex == i)
+                            return;
+
+                        dSelectTypeIndex = i;
+
+                        //获取相应的分类dataset集合
+                        downloadedDatasetList.clear();
+                        downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset(Utils.TYPES[i]));
+
+                        //对应的分类没有则为空提示
+                        if (downloadedDatasetList.size() < 1) {
+                            emptyTipText.setVisibility(View.VISIBLE);
+                        } else {
+                            emptyTipText.setVisibility(View.GONE);
+                        }
+
+                        DatasetInfo.sortDatasetList(downloadedDatasetList, dSelectSortIndex);//排序
+
+                        downloadedAdapter.notifyDataSetChanged();
+                    }
+
+                } else {//排序
+
+                    if (mode == 0 && i == selectSortIndex ||
+                            mode == 1 && i == dSelectSortIndex) {
                         return;
                     }
 
                     sortBtn.setText(strs[i]);
-                    selectSortIndex = i;
+                    if (mode == 0) {
+                        selectSortIndex = i;
 
-                    DatasetInfo.sortDatasetList(datasetInfoList, selectSortIndex);
-                    datasetAdapter.notifyDataSetChanged();
+                        DatasetInfo.sortDatasetList(datasetInfoList, selectSortIndex);
+                        datasetAdapter.notifyDataSetChanged();
+
+                    } else {
+                        dSelectSortIndex = i;
+
+                        DatasetInfo.sortDatasetList(downloadedDatasetList, dSelectSortIndex);
+                        downloadedAdapter.notifyDataSetChanged();
+                    }
                 }
 
                 typeAdapter.setSelectedIndex(i);

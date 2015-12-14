@@ -44,7 +44,8 @@ public interface DatasetDao {
     /**
      * 获取所有已下载完成的dataset
      *
+     * @param type
      * @return
      */
-    public List<DatasetInfo> getAllDownloadedDataset();
+    public List<DatasetInfo> getAllDownloadedDataset(String type);
 }

@@ -17,6 +17,7 @@ import com.activels.als.diyappmanager.R;
 import com.activels.als.diyappmanager.db.DatasetDaoImpl;
 import com.activels.als.diyappmanager.entity.DatasetInfo;
 import com.activels.als.diyappmanager.service.DownloadService;
+import com.activels.als.diyappmanager.utils.SharedPreferencesUtils;
 import com.activels.als.diyappmanager.utils.ToastUtil;
 import com.activels.als.diyappmanager.utils.Utils;
 import com.activels.als.diyappmanager.utils.ZipUtil;
@@ -128,7 +129,7 @@ public class DatasetAdapter extends BaseAdapter {
 
                 } else if (Utils.STATE_UNZIPED == state) {//当前解压完成，预览
 
-                    intentHandle(datasetInfo.getDatasetName(), datasetInfo.getType());
+                    intentHandle(datasetInfo.getDatasetName(), datasetInfo.getTypeIndex());
 
                 } else if (Utils.STATE_UPDATE == state) {//当前需更新，下载
 
@@ -213,7 +214,7 @@ public class DatasetAdapter extends BaseAdapter {
      * @param dataset
      * @param type
      */
-    private void intentHandle(String dataset, String type) {
+    private void intentHandle(String dataset, int type) {
 
         File file = new File(Utils.DOWNLOAD_PATH, dataset);
 
@@ -222,18 +223,17 @@ public class DatasetAdapter extends BaseAdapter {
             return;
         }
 
-        int t = Integer.parseInt(type);
-
         try {
             Intent intent = new Intent();
-            intent.setClassName(Utils.PACKAGENAME[t - 1], Utils.CLASSNAME[t - 1]);
+            intent.setClassName(Utils.PACKAGENAME[type - 1], Utils.CLASSNAME[type - 1]);
             Bundle bundle = new Bundle();
             bundle.putString("dataset", Utils.DOWNLOAD_PATH + "/" + dataset + "/");
+            bundle.putString("teacherId", SharedPreferencesUtils.getInstance(context, "").loadStringSharedPreference(Utils.LOGIN_USER_NAME));
             intent.putExtras(bundle);
 
             context.startActivity(intent);
         } catch (Exception e) {
-            ToastUtil.toastShort(context, String.format(context.getString(R.string.install_app_first), Utils.TYPES[t]));
+            ToastUtil.toastShort(context, String.format(context.getString(R.string.install_app_first), Utils.TYPES[type]));
         }
     }
 

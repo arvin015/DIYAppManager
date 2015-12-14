@@ -43,7 +43,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/login_tab_unselected"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -64,7 +65,6 @@
                     android:id="@+id/manualTab"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/login_tab_selected"
                     android:gravity="center"

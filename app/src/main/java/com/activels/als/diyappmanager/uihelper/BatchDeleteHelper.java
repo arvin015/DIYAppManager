@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.activels.als.diyappmanager.R;
+import com.activels.als.diyappmanager.utils.ToastUtil;
 
 /**
  * Created by Administrator on 2015/9/12.
@@ -77,8 +78,10 @@ public class BatchDeleteHelper {
             @Override
             public void onClick(View v) {
 
-                if (totalSize == 0 || selectedSize == 0)
+                if (totalSize == 0 || selectedSize == 0) {
+                    ToastUtil.toastShort(context, context.getString(R.string.no_subject_selected_text));
                     return;
+                }
 
                 if (listener != null)
                     listener.onDeleteClick();
