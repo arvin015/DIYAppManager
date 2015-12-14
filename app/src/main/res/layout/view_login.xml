@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/mbg01_signin_s_01"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tfrbg01_reg01_01"
+            android:gravity="center"
+            android:shadowColor="#ff000000"
+            android:shadowRadius="5"
+            android:text="@string/app_title"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/qrTab"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_tab_unselected"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/login_ic_qr" />
+
+                    <TextView
+                        android:id="@+id/qrText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/QR_code_login"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/manualTab"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_tab_selected"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/login_ic_manual" />
+
+                    <TextView
+                        android:id="@+id/manualText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/manual_login"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--<RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/qrTab"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_tab_selector"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/login_ic_qr"
+                    android:paddingLeft="140dp"
+                    android:text="QR code Login"
+                    android:textColor="@drawable/login_tab_color_selector"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/mannulTab"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_tab_selector"
+                    android:button="@null"
+                    android:checked="true"
+                    android:paddingLeft="140dp"
+                    android:text="Manual Login"
+                    android:textColor="@drawable/login_tab_color_selector"
+                    android:textSize="18sp" />
+
+            </RadioGroup>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/login_bkg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/qrcodeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/g_icn04_attention_01"
+                        android:gravity="center"
+                        android:text="@string/scanning_text"
+                        android:textColor="#000000"
+                        android:textSize="26sp" />
+
+                    <ImageButton
+                        android:id="@+id/qrBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/login_qr_btn_selector" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/manualContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/userEdit"
+                        android:layout_width="600dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/login_manual_user_box"
+                        android:hint="@string/username_text"
+                        android:maxLength="25"
+                        android:paddingLeft="55dp"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+
+                    <EditText
+                        android:id="@+id/psdEdit"
+                        android:layout_width="600dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/login_manual_pw_box"
+                        android:hint="@string/password_text"
+                        android:inputType="textPassword"
+                        android:maxLength="25"
+                        android:paddingLeft="55dp"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+
+                    <LinearLayout
+                        android:layout_width="600dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal">
+
+                        <ToggleButton
+                            android:id="@+id/checkBoxBtn"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/login_checkbox_selector"
+                            android:checked="true"
+                            android:textOff=""
+                            android:textOn="" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/remember_name_text"
+                            android:textColor="#000000"
+                            android:textSize="24sp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/loginBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/login_manual_btn_login" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/settingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="30dp"
+        android:background="@null"
+        android:textSize="28sp" />
+
+    <ImageView
+        android:id="@+id/guideImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_screen"
+        android:visibility="gone" />
+
+</FrameLayout>

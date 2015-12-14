@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DIYAppManager</string>
+    <string name="version_name">DIYAppManager_v0.0.1_b1</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Config</string>
+
+    <string name="desc_text">Description: </string>
+    <string name="type_text">App Type: </string>
+    <string name="date_text">Modified Date: </string>
+    <string name="size_text">Size: </string>
+
+    <string name="get_text">GET</string>
+    <string name="update_text">UPDATE</string>
+    <string name="preview_text">PREVIEW</string>
+    <string name="stop_text">STOP</string>
+    <string name="decompression_text">Decompression</string>
+
+    <string name="loadmore_text">load More...</string>
+
+    <string name="app_type_text">App Type</string>
+
+    <string name="app_title">Login to DIY tools</string>
+    <string name="scanning_text">Scanning QR code</string>
+    <string name="QR_code_login">QR code Login</string>
+    <string name="manual_login">Manual Login</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="remember_name_text">Remember user name and password</string>
+    <string name="scanning_tip_text">Please scan the QR code</string>
+    <string name="scanning_fail_text">Scan Fail!</string>
+
+    <string name="logout_text">Logout</string>
+    <string name="logout_tip_text">Are you sure you want to Logout?</string>
+
+    <string name="login_waiting">Please later...</string>
+    <string name="user_or_psd_is_empty">User name and Password can not be empty!</string>
+    <string name="user_or_psd_is_incorrect">User name or password is incorrect!</string>
+    <string name="login_success">Login success！</string>
+
+    <string name="load_all_text">All data is loaded!</string>
+    <string name="empty_tip_text">Data is empty!</string>
+    <string name="network_not_connected">Network is not connected, please check the network!</string>
+
+    <string name="press_again_to_quit">Then press one, exit the program!</string>
+
+    <string name="delete_all_tip_text">Are you sure you want to delete all of the application?</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="sure_text">Sure</string>
+
+    <string name="manage_text">Manage Apps</string>
+    <string name="select_all_text">Select All</string>
+    <string name="select_no_one_text">Select No One</string>
+    <string name="delete_text">Delete</string>
+    <string name="selected_size_text">Selected data size </string>
+    <string name="back_text">Back</string>
+    <string name="deleted_text">Deleted</string>
+
+    <string name="install_app_first">Please install the %s application!</string>
+    <string name="file_not_exist">The file %s does not exist. Please make sure that the file is in the SD card</string>
+
+    <string name="config_text">Config</string>
+    <string name="config_title_text">System Config</string>
+    <string name="save_and_return_text">Save And Return</string>
+    <string name="save_success_tip">Save Success!</string>
+
+    <array name="types_arr">
+        <item>Last Modified Date</item>
+        <item>App Name</item>
+    </array>
+
+</resources>

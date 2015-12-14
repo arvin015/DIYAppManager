@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">DIYAppManager</string>
+    <string name="version_name">DIYAppManager_v0.0.1_b1</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">配置</string>
+
+    <string name="desc_text">描述：</string>
+    <string name="type_text">類型：</string>
+    <string name="date_text">時間：</string>
+    <string name="size_text">大小：</string>
+
+    <string name="get_text">下載</string>
+    <string name="update_text">更新</string>
+    <string name="preview_text">預覽</string>
+    <string name="stop_text">停止</string>
+    <string name="decompression_text">解壓中</string>
+
+    <string name="loadmore_text">加載更多...</string>
+
+    <string name="app_type_text">類型</string>
+
+    <string name="app_title">登入DIY系統</string>
+    <string name="scanning_text">掃描QR code</string>
+    <string name="QR_code_login">QR code 登入</string>
+    <string name="manual_login">手動登入</string>
+    <string name="username_text">用戶名稱</string>
+    <string name="password_text">密碼</string>
+    <string name="remember_name_text">記住用戶名和密碼</string>
+    <string name="scanning_tip_text">請掃描證件上QR code</string>
+    <string name="scanning_fail_text">掃描失敗！</string>
+
+    <string name="logout_text">登出</string>
+    <string name="logout_tip_text">確定退出登入？</string>
+
+    <string name="login_waiting">請稍後...</string>
+    <string name="user_or_psd_is_empty">用戶名和密碼不能為空！</string>
+    <string name="user_or_psd_is_incorrect">用戶名或密碼不正確！</string>
+    <string name="login_success">登入成功！</string>
+
+    <string name="load_all_text">所有數據加載完畢！</string>
+    <string name="empty_tip_text">數據為空！</string>
+    <string name="network_not_connected">網絡未連接，請檢查網絡！</string>
+
+    <string name="press_again_to_quit">再按一次，退出程序！</string>
+
+    <string name="delete_all_tip_text">確定刪除所有應用？</string>
+    <string name="cancel_text">取消</string>
+    <string name="sure_text">確定</string>
+
+    <string name="manage_text">管理應用</string>
+    <string name="select_all_text">全選</string>
+    <string name="select_no_one_text">全不選</string>
+    <string name="delete_text">刪除</string>
+    <string name="selected_size_text">選中大小 </string>
+    <string name="back_text">返回</string>
+    <string name="deleted_text">已下載</string>
+
+    <string name="install_app_first">請先安裝 %s 應用程序！</string>
+    <string name="file_not_exist">%s文件不存在，請確保SD卡中存在該dataset！</string>
+
+    <string name="config_text">配置</string>
+    <string name="config_title_text">系統配置</string>
+    <string name="save_and_return_text">儲存并退出</string>
+    <string name="save_success_tip">儲存成功！</string>
+
+    <array name="types_arr">
+        <item>最後修改時間</item>
+        <item>應用名稱</item>
+    </array>
+
+</resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/mbg01_signin_s_01"
+    android:orientation="vertical">
+
+    <SurfaceView
+        android:id="@+id/preview_view"
+        android:layout_width="600dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="120dp" />
+
+    <com.activels.als.diyappmanager.qrcode.ViewfinderView
+        android:id="@+id/viewfinder_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="60dp"
+        android:drawableLeft="@drawable/g_icn04_attention_01"
+        android:gravity="center"
+        android:text="@string/scanning_tip_text"
+        android:textColor="#000000"
+        android:textSize="26sp" />
+
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tfrbg01_reg01_01"
+        android:gravity="center"
+        android:shadowColor="#ff000000"
+        android:shadowRadius="5"
+        android:text="@string/app_title"
+        android:textColor="#FFFFFF"
+        android:textSize="38sp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/tfrbg01_reg01_01">
+
+            <ImageButton
+                android:id="@+id/btn_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="#00000000"
+                android:src="@drawable/show_left" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>
