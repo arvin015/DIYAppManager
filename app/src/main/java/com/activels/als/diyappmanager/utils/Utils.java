@@ -49,9 +49,9 @@ public class Utils {
     public static final String token = "2000000";
     public static final int count = 14;   //每页显示的数量
 
-    public static final String[] PACKAGENAME = {"com.Accentrix.eTextBooksa_preview", "com.activels.als.drawcard_preview",
+    public static final String[] PACKAGENAME = {"com.Accentrix.eTextBook_preview", "com.activels.als.drawcard_preview",
             "com.yzc.teacher.cardsend_preview", "org.astri.mclp.app.teacher.mclpvideoquestion_preview"};
-    public static final String[] CLASSNAME = {"com.Accentrix.eTextBooksa_preview.ArticleActivity", "com.activels.als.drawcard_preview.DrawCardActivity",
+    public static final String[] CLASSNAME = {"com.Accentrix.eTextBook_preview.ArticleActivity", "com.activels.als.drawcard_preview.DrawCardActivity",
             "com.yzc.teacher.cardsend_preview.CardSendEntryActivity", "org.astri.mclp.app.teacher.mclpvideoquestion_preview.EntryActivity"};
 
 }

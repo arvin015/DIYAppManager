@@ -39,6 +39,13 @@ public class ThreadDaoImpl implements ThreadDao {
     }
 
     @Override
+    public synchronized void deleteAllThread() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("delete from thread_info");
+        db.close();
+    }
+
+    @Override
     public synchronized void updateProgress(int id, String url, int finished) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("update thread_info set finished=? where thread_id = ? and url = ?", new Object[]{

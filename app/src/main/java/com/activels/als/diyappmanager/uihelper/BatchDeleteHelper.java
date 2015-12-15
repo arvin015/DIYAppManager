@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.activels.als.diyappmanager.R;
+import com.activels.als.diyappmanager.utils.StringUtil;
 import com.activels.als.diyappmanager.utils.ToastUtil;
 
 /**
@@ -104,7 +105,8 @@ public class BatchDeleteHelper {
      */
     public void setCountText() {
         countText.setText(context.getString(R.string.selected_size_text)
-                + "(" + selectedSize + "MB / " + totalSize + "MB)");
+                + "(" + StringUtil.getDecimalFormat(Math.abs(selectedSize), 2) + "MB / " +
+                "" + StringUtil.getDecimalFormat(totalSize, 2) + "MB)");
     }
 
     /**

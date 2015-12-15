@@ -65,9 +65,22 @@
     <string name="save_and_return_text">儲存并退出</string>
     <string name="save_success_tip">儲存成功！</string>
 
-    <array name="types_arr">
+    <string name="sort_text">排序</string>
+    <string name="last_modified_time">最後修改時間</string>
+    <string name="search_app_text">搜索應用</string>
+    <string name="all_app_types">全部類型</string>
+
+    <array name="sort_arr">
         <item>最後修改時間</item>
         <item>應用名稱</item>
+    </array>
+
+    <array name="type_arr">
+        <item>全部類型</item>
+        <item>eBook</item>
+        <item>Draw Something</item>
+        <item>Card Send</item>
+        <item>Video Quiz</item>
     </array>
 
 </resources>

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.activels.als.diyappmanager.R;
+import com.activels.als.diyappmanager.db.DatasetDao;
 import com.activels.als.diyappmanager.db.DatasetDaoImpl;
 import com.activels.als.diyappmanager.entity.DatasetInfo;
 import com.activels.als.diyappmanager.service.DownloadService;
@@ -45,11 +46,15 @@ public class DatasetAdapter extends BaseAdapter {
     public boolean isDeleteAll = false;//是否执行了删除所有操作
     public int currentDeleteId = -1;//当前需要删除的dataset
 
+    private DatasetDao mDatasetDao;
+
     public DatasetAdapter(Context context, List<DatasetInfo> datasetInfoList,
                           FinalBitmap fBitmap) {
         this.context = context;
         this.datasetInfoList = datasetInfoList;
         this.fBitmap = fBitmap;
+
+        mDatasetDao = new DatasetDaoImpl(context);
 
         inflater = LayoutInflater.from(context);
     }
@@ -134,7 +139,7 @@ public class DatasetAdapter extends BaseAdapter {
                 } else if (Utils.STATE_UPDATE == state) {//当前需更新，下载
 
                     //删除本地保存的旧记录
-                    new DatasetDaoImpl(context).deleteDatasetByDatasetId(datasetInfo.getId());
+                    mDatasetDao.deleteDatasetByDatasetId(datasetInfo.getId());
 
                     downloadHandle(datasetInfo, view);
 
@@ -233,7 +238,8 @@ public class DatasetAdapter extends BaseAdapter {
 
             context.startActivity(intent);
         } catch (Exception e) {
-            ToastUtil.toastShort(context, String.format(context.getString(R.string.install_app_first), Utils.TYPES[type]));
+            ToastUtil.toastShort(context, String.format(context.getString(R.string.install_app_first),
+                    Utils.TYPES[type]));
         }
     }
 
@@ -290,8 +296,7 @@ public class DatasetAdapter extends BaseAdapter {
         }
 
         //正执行删除操作，则不再更新进度
-        if (isDeleteAll ||
-                datasetInfo.getId() == currentDeleteId) {
+        if (datasetInfo.getId() == currentDeleteId) {
             return;
         }
 
@@ -310,8 +315,7 @@ public class DatasetAdapter extends BaseAdapter {
      */
     public void downloadCompleted(DatasetInfo datasetInfo) {
 
-        if (isDeleteAll ||
-                datasetInfo.getId() == currentDeleteId) {
+        if (datasetInfo.getId() == currentDeleteId) {
             return;
         }
 
@@ -395,6 +399,8 @@ public class DatasetAdapter extends BaseAdapter {
                 DatasetInfo info = getDatasetByDatasetId(datasetId);
                 if (info != null) {
                     info.setOperateState(Utils.STATE_UNZIPED);
+
+                    mDatasetDao.updateDataset(info);
 
                     notifyDataSetChanged();
                 }

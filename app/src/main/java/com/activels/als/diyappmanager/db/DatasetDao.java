@@ -42,6 +42,11 @@ public interface DatasetDao {
     public void deleteDatasetByDatasetId(int datasetId);
 
     /**
+     * 删除所有下载中的dataset记录 ver 1
+     */
+    public void deleteAllDownloadingDataset();
+
+    /**
      * 获取所有已下载完成的dataset
      *
      * @param type

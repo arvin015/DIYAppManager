@@ -74,6 +74,13 @@ public class DatasetDaoImpl implements DatasetDao {
     }
 
     @Override
+    public synchronized void deleteAllDownloadingDataset() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("delete from dataset_info where state < ?", new String[]{"" + Utils.STATE_UNZIPED});
+        db.close();
+    }
+
+    @Override
     public List<DatasetInfo> getAllDownloadedDataset(String type) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();

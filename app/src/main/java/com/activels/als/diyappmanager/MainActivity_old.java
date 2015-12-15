@@ -83,7 +83,7 @@ public class MainActivity_old extends BaseActivity {
         sortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                choiceHandle(view, 2, getResources().getStringArray(R.array.types_arr));
+                choiceHandle(view, 2, getResources().getStringArray(R.array.sort_arr));
             }
         });
 

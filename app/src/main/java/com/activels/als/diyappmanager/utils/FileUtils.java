@@ -417,6 +417,27 @@ public class FileUtils {
         return (file.delete());
     }
 
+    /**
+     * 删除目录下的文件
+     *
+     * @param path
+     * @return
+     */
+    public static boolean deleteDir2(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            File[] files = file.listFiles();
+            if (files == null)
+                return true;
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].isFile()) {
+                    files[i].delete();
+                }
+            }
+        }
+        return (file.delete());
+    }
+
     public static boolean deleteDir(File path) {
         if (path.exists()) {
             File[] files = path.listFiles();

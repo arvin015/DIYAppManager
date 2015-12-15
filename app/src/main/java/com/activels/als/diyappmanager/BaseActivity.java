@@ -71,7 +71,11 @@ public class BaseActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         if (mBroadcast != null) {
             try {
                 unregisterReceiver(mBroadcast);

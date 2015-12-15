@@ -36,7 +36,7 @@
                         android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:hint="Search My DIY Apps"
+                        android:hint="@string/search_app_text"
                         android:paddingLeft="35dp"
                         android:singleLine="true"
                         android:textColor="#000000" />
@@ -56,7 +56,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="All App Types"
+                    android:text="@string/all_app_types"
                     android:textColor="#0000FF"
                     android:textSize="20sp" />
 
@@ -72,7 +72,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sort by"
+                    android:text="@string/sort_text"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -81,7 +81,7 @@
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="Last Modified Date"
+                    android:text="@string/last_modified_time"
                     android:textColor="#000FFF"
                     android:textSize="20sp" />
 

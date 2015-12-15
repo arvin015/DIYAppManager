@@ -67,9 +67,22 @@
     <string name="save_and_return_text">Save And Return</string>
     <string name="save_success_tip">Save Success!</string>
 
-    <array name="types_arr">
+    <string name="sort_text">Sort by</string>
+    <string name="last_modified_time">Last Modified Date</string>
+    <string name="search_app_text">Search My DIY Apps</string>
+    <string name="all_app_types">All App Types</string>
+
+    <array name="sort_arr">
         <item>Last Modified Date</item>
         <item>App Name</item>
+    </array>
+
+    <array name="type_arr">
+        <item>All App Types</item>
+        <item>eBook</item>
+        <item>Draw Something</item>
+        <item>Card Send</item>
+        <item>Video Quiz</item>
     </array>
 
 </resources>

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -188,14 +189,14 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                choiceHandle(view, 1, Utils.TYPES);
+                choiceHandle(view, 1, getResources().getStringArray(R.array.type_arr));
             }
         });
 
         sortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                choiceHandle(view, 2, getResources().getStringArray(R.array.types_arr));
+                choiceHandle(view, 2, getResources().getStringArray(R.array.sort_arr));
             }
         });
 
@@ -251,7 +252,6 @@ public class MainActivity extends BaseActivity {
 
                         float size = Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("M")));
                         batchDeleteHelper.countSize(info.isChecked() ? size : -(size));
-                        batchDeleteHelper.countSize(info.isChecked() ? size : -(size));
                     }
                 }
             }
@@ -261,6 +261,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                if (true) //ver 1
+                    return true;
+
+                //ver 2
                 if (datasetInfoList != null) {
                     final DatasetInfo info = datasetInfoList.get(i);
                     if (info.isCanDelete()) {
@@ -308,39 +312,8 @@ public class MainActivity extends BaseActivity {
 
         setBtnVisibility(View.GONE);
 
-        if (downloadedDatasetList == null) {
-            downloadedDatasetList = new ArrayList<>();
-        }
-        downloadedDatasetList.clear();
-
-        if (deletedDatasetList == null) {
-            deletedDatasetList = new ArrayList<>();
-        }
-        deletedDatasetList.clear();
-
-        infoList.clear();
-
-        float totalSize = 0; //已下载完成的dataset总大小
-
-        if (mDatasetDao != null) {
-            downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset(Utils.TYPES[0]));
-
-            for (DatasetInfo info : downloadedDatasetList) {
-                info.setIsChecked(false);
-                totalSize += Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("M")));
-            }
-
-        }
-
         downloadedGridView.setVisibility(View.VISIBLE);
         pullToRefreshGridView.setVisibility(View.GONE);
-
-        if (downloadedAdapter == null) {
-            downloadedAdapter = new DownloadedAdapter(context, downloadedDatasetList, fBitmap);
-            downloadedGridView.setAdapter(downloadedAdapter);
-        } else {
-            downloadedAdapter.updateData(downloadedDatasetList);
-        }
 
         if (batchDeleteHelper == null) {
             batchDeleteHelper = new BatchDeleteHelper(context, mainView);
@@ -365,15 +338,30 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
-        batchDeleteHelper.totalNum = downloadedDatasetList.size();
-        batchDeleteHelper.totalSize = totalSize;
-        batchDeleteHelper.reset();
         batchDeleteHelper.setDeleteBarVisibility(View.VISIBLE);
 
-        if (downloadedDatasetList.size() < 1) {
-            emptyTipText.setVisibility(View.VISIBLE);
-            batchDeleteHelper.setBtnEnabled(false);
+        if (downloadedDatasetList == null) {
+            downloadedDatasetList = new ArrayList<>();
         }
+        downloadedDatasetList.clear();
+
+        if (deletedDatasetList == null) {
+            deletedDatasetList = new ArrayList<>();
+        }
+        deletedDatasetList.clear();
+
+        infoList.clear();
+
+        loadDataFromLocal(0);//从本地数据库获取下载完成数据
+
+        if (downloadedAdapter == null) {
+            downloadedAdapter = new DownloadedAdapter(context, downloadedDatasetList, fBitmap);
+            downloadedGridView.setAdapter(downloadedAdapter);
+        } else {
+            downloadedAdapter.updateData(downloadedDatasetList);
+        }
+
+        updateTypeAndSort();
     }
 
 
@@ -397,6 +385,8 @@ public class MainActivity extends BaseActivity {
         datasetAdapter.downloadCompletedBatch(infoList);//批处理已经下载完成的
 
         batchDeleteHelper.setDeleteBarVisibility(View.GONE);
+
+        updateTypeAndSort();
     }
 
     /**
@@ -409,6 +399,22 @@ public class MainActivity extends BaseActivity {
         logoutBtn.setVisibility(visibility);
         manageBtn.setVisibility(visibility);
         refreshBtn.setVisibility(visibility);
+    }
+
+    /**
+     * 更新TypeAndSort选项信息
+     */
+    private void updateTypeAndSort() {
+        if (mode == 0) {//一般模式
+            typeBtn.setText(getResources().getStringArray(R.array.type_arr)[selectTypeIndex]);
+            sortBtn.setText(getResources().getStringArray(R.array.sort_arr)[selectSortIndex]);
+        } else {//删除模式
+            dSelectSortIndex = 0;
+            dSelectTypeIndex = 0;
+
+            typeBtn.setText(getResources().getStringArray(R.array.type_arr)[0]);
+            sortBtn.setText(getResources().getStringArray(R.array.sort_arr)[0]);
+        }
     }
 
     /**
@@ -584,7 +590,6 @@ public class MainActivity extends BaseActivity {
                 //全部删除了，则提示数据为空
                 if (downloadedDatasetList.size() < 1) {
                     emptyTipText.setVisibility(View.VISIBLE);
-                    batchDeleteHelper.setBtnEnabled(false);
                 }
 
                 downloadedAdapter.notifyDataSetChanged();
@@ -707,18 +712,7 @@ public class MainActivity extends BaseActivity {
 
                         dSelectTypeIndex = i;
 
-                        //获取相应的分类dataset集合
-                        downloadedDatasetList.clear();
-                        downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset(Utils.TYPES[i]));
-
-                        //对应的分类没有则为空提示
-                        if (downloadedDatasetList.size() < 1) {
-                            emptyTipText.setVisibility(View.VISIBLE);
-                        } else {
-                            emptyTipText.setVisibility(View.GONE);
-                        }
-
-                        DatasetInfo.sortDatasetList(downloadedDatasetList, dSelectSortIndex);//排序
+                        loadDataFromLocal(dSelectTypeIndex);
 
                         downloadedAdapter.notifyDataSetChanged();
                     }
@@ -751,6 +745,37 @@ public class MainActivity extends BaseActivity {
 
         popup.setPopuWindow(view, -1, null);
         popup.showAsDropDown(v, 0, 0);
+    }
+
+    /**
+     * 从本地获取下载完成数据
+     *
+     * @param index
+     */
+    private void loadDataFromLocal(int index) {
+        //获取相应的分类dataset集合
+        downloadedDatasetList.clear();
+        downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset(Utils.TYPES[index]));
+
+        //对应的分类没有则为空提示
+        if (downloadedDatasetList.size() < 1) {
+            emptyTipText.setVisibility(View.VISIBLE);
+        } else {
+            emptyTipText.setVisibility(View.GONE);
+        }
+
+        float totalSize = 0;
+
+        for (DatasetInfo info : downloadedDatasetList) {
+            info.setIsChecked(false);
+            totalSize += Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("M")));
+        }
+
+        batchDeleteHelper.totalNum = downloadedDatasetList.size();
+        batchDeleteHelper.totalSize = totalSize;
+        batchDeleteHelper.reset();
+
+        DatasetInfo.sortDatasetList(downloadedDatasetList, dSelectSortIndex);//排序
     }
 
     /**
@@ -843,8 +868,6 @@ public class MainActivity extends BaseActivity {
                                         int state = d.getOperateState();
                                         if (state < Utils.STATE_UNZIPING) {
                                             state = Utils.STATE_STOP;
-                                        } else if (state == Utils.STATE_UNZIPING) {
-                                            state = Utils.STATE_UNZIPED;
                                         }
 
                                         //服务器上的时间比已经下载好本地时间要新，则需更新
@@ -930,9 +953,25 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        Log.d("print", "onDestroy");
+
+        clear();
+    }
+
+    /**
+     * 清除下载信息
+     */
+    private void clear() {
         //退出时保存dataset下载记录
         Intent intent = new Intent(context, DownloadService.class);
         intent.setAction(Utils.ACTION_QUIT);
         startService(intent);
+
+        //ver 1
+        if (mDatasetDao != null)
+            mDatasetDao.deleteAllDownloadingDataset();
+
+        //ver 1 删除未下载完未解压完的文件
+        FileUtils.deleteDir2(Utils.DOWNLOAD_PATH);
     }
 }

@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 
 import com.activels.als.diyappmanager.db.DatasetDao;
 import com.activels.als.diyappmanager.db.DatasetDaoImpl;
+import com.activels.als.diyappmanager.db.ThreadDao;
+import com.activels.als.diyappmanager.db.ThreadDaoImpl;
 import com.activels.als.diyappmanager.entity.DatasetInfo;
 import com.activels.als.diyappmanager.utils.Utils;
 
@@ -34,11 +37,12 @@ public class DownloadService extends Service {
     private static final int GET_SUCCESS = 10000;
 
     private DatasetDao mDatasetDao = new DatasetDaoImpl(this);
+    private ThreadDao mThreadDao = new ThreadDaoImpl(this);//ver 1
 
     private Map<Integer, DownloadTask> downloadTasks = new ConcurrentHashMap<>();//文件下载任务哈希集合
 
     //    public static ExecutorService executorService = Executors.newCachedThreadPool();//带缓存的线程池
-    public static ExecutorService executorService = Executors.newFixedThreadPool(6);//最多留个线程并发，多余的排队等待
+    public static ExecutorService executorService = Executors.newFixedThreadPool(6);//最多6个线程并发，多余的排队等待
 
     private Handler handler = new Handler() {
         @Override
@@ -137,13 +141,18 @@ public class DownloadService extends Service {
         for (Integer key : downloadTasks.keySet()) {
             DownloadTask downloadTask = downloadTasks.get(key);
 
-            mDatasetDao.updateDataset(downloadTask.datasetInfo);
+//            mDatasetDao.updateDataset(downloadTask.datasetInfo); //ver 2
 
             downloadTask.isPause = true;
 
         }
 
         downloadTasks.clear();
+
+        //ver 1 删除所有下载记录
+        if (mThreadDao != null)
+            mThreadDao.deleteAllThread();
+
     }
 
     /**

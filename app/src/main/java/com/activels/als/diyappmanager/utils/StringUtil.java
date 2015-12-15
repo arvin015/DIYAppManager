@@ -6,11 +6,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -739,5 +741,26 @@ public class StringUtil {
         }
 
         return false;
+    }
+
+    /**
+     * 保留几位小数
+     *
+     * @param value
+     * @param num
+     * @return
+     */
+    public static String getDecimalFormat(float value, int num) {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("0");
+
+        for (int i = 0; i < num - 1; i++) {
+            sb.append("0");
+        }
+
+        DecimalFormat decimalFormat = new DecimalFormat("0." + sb.toString());
+
+        return decimalFormat.format(value);
     }
 }

@@ -27,6 +27,11 @@ public interface ThreadDao {
     public void deleteThread(String url);
 
     /**
+     * 删除所有下载任务
+     */
+    public void deleteAllThread();
+
+    /**
      * 更新下载进度
      *
      * @param id
