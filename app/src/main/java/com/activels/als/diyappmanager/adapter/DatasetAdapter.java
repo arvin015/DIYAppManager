@@ -34,6 +34,7 @@ import net.tsz.afinal.FinalBitmap;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -45,6 +46,8 @@ public class DatasetAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<DatasetInfo> datasetInfoList;
+
+    private List<String> zipingDatasetList;
 
     private FinalBitmap fBitmap;
 
@@ -61,6 +64,7 @@ public class DatasetAdapter extends BaseAdapter {
         this.fBitmap = fBitmap;
 
         mDatasetDao = new DatasetDaoImpl(context);
+        zipingDatasetList = new LinkedList<>();
 
         inflater = LayoutInflater.from(context);
     }
@@ -117,12 +121,12 @@ public class DatasetAdapter extends BaseAdapter {
 
                 if (Utils.STATE_STOP == state) {//当前是未下载，下载
 
-                    viewHolder.lockBtn.setEnabled(true);
-                    if (datasetInfo.isLocked()) {
-                        viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked);
-                    } else {
-                        viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_unlocked);
-                    }
+//                    viewHolder.lockBtn.setEnabled(true);
+//                    if (datasetInfo.isLocked()) {
+//                        viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked);
+//                    } else {
+//                        viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_unlocked);
+//                    }
 
                     downloadHandle(datasetInfo, view);
 
@@ -146,6 +150,9 @@ public class DatasetAdapter extends BaseAdapter {
                             .setPositiveButton(context.getString(R.string.sure_text), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    currentDeleteId = datasetInfo.getId();
+
                                     if (listener != null)
                                         listener.absortDownload(datasetInfo);
                                 }
@@ -170,18 +177,18 @@ public class DatasetAdapter extends BaseAdapter {
             }
         });
 
-        viewHolder.lockBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (datasetInfo.isLocked()) {
-                    datasetInfo.setIsLocked(false);
-                    viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_unlocked);
-                } else {
-                    datasetInfo.setIsLocked(true);
-                    viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked);
-                }
-            }
-        });
+//        viewHolder.lockBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (datasetInfo.isLocked()) {
+//                    datasetInfo.setIsLocked(false);
+//                    viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_unlocked);
+//                } else {
+//                    datasetInfo.setIsLocked(true);
+//                    viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked);
+//                }
+//            }
+//        });
 
         viewHolder.nameText.setText(datasetInfo.getName());
         viewHolder.descText.setText(datasetInfo.getInfo());
@@ -193,17 +200,17 @@ public class DatasetAdapter extends BaseAdapter {
         viewHolder.checkBtn.setVisibility(View.GONE);
         viewHolder.operateBtn.setVisibility(View.VISIBLE);
 
-        if (datasetInfo.isCanDelete()) {
-            viewHolder.lockBtn.setEnabled(true);
-            if (datasetInfo.isLocked()) {
-                viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked);
-            } else {
-                viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_unlocked);
-            }
-        } else {
-            viewHolder.lockBtn.setEnabled(false);
-            viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked_d);
-        }
+//        if (datasetInfo.isCanDelete()) {
+//            viewHolder.lockBtn.setEnabled(true);
+//            if (datasetInfo.isLocked()) {
+//                viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked);
+//            } else {
+//                viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_unlocked);
+//            }
+//        } else {
+//            viewHolder.lockBtn.setEnabled(false);
+//            viewHolder.lockBtn.setBackgroundResource(R.drawable.icon_locked_d);
+//        }
 
         int state = datasetInfo.getOperateState();
         if (state == Utils.STATE_DOWNLOAGING) {//下载中
@@ -211,8 +218,10 @@ public class DatasetAdapter extends BaseAdapter {
         } else if (Utils.STATE_UNZIPING == state) {//下载完成-解压中
             viewHolder.operateBtn.setText(context.getString(R.string.decompression_text));
 
-            //解压操作
-            new ZipThread(datasetInfo.getId(), datasetInfo.getLink()).start();
+            if (!isZiping(datasetInfo.getId())) {
+                //解压操作
+                new ZipThread(datasetInfo.getId(), datasetInfo.getLink()).start();
+            }
 
         } else if (Utils.STATE_UNZIPED == state) {//解压完成-预览
             viewHolder.operateBtn.setText(context.getString(R.string.preview_text));
@@ -232,6 +241,22 @@ public class DatasetAdapter extends BaseAdapter {
         TextView nameText, descText, dateText, typeText, sizeText;
         MyProgressBar operateBtn;
         ToggleButton checkBtn;
+    }
+
+    /**
+     * 是否正在解压
+     *
+     * @param datasestId
+     * @return
+     */
+    private boolean isZiping(int datasestId) {
+        for (String i : zipingDatasetList) {
+            if (i.equals(datasestId + "")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -443,16 +468,12 @@ public class DatasetAdapter extends BaseAdapter {
                     info.setSize("0MB".equals(msg.obj.toString()) ?
                             info.getZipSize() : msg.obj.toString());
 
+                    zipingDatasetList.remove(datasetId + "");
+
                     notifyDataSetChanged();
 
                     mDatasetDao.updateDataset(info);
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mDatasetDao.updateDatasetSize(datasetId, info.getSize());
-                        }
-                    }, 1000);
+                    mDatasetDao.updateDatasetSize(datasetId, info.getSize());
                 }
             }
         }
@@ -469,6 +490,9 @@ public class DatasetAdapter extends BaseAdapter {
         public ZipThread(int datasetId, String link) {
 
             this.datasetId = datasetId;
+
+            zipingDatasetList.add(datasetId + "");
+
             String zipName = link.substring(link.lastIndexOf("/") + 1);
 
             this.src = Utils.DOWNLOAD_PATH + "/" + zipName;
