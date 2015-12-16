@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Environment;
+import android.os.StatFs;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
+import android.text.format.Formatter;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -762,5 +765,79 @@ public class StringUtil {
         DecimalFormat decimalFormat = new DecimalFormat("0." + sb.toString());
 
         return decimalFormat.format(value);
+    }
+
+    /**
+     * 获取SD卡的总空间和可用空间
+     *
+     * @param context
+     * @return
+     */
+    public static String[] getBlockFromSD(Context context) {
+        File path = Environment.getExternalStorageDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long totalBlocks = stat.getBlockCount();
+        long availableBlocks = stat.getAvailableBlocks();
+
+        long totalSize = totalBlocks * blockSize;
+        long availSize = availableBlocks * blockSize;
+
+        return new String[]{Formatter.formatFileSize(context, totalSize), Formatter.formatFileSize(context, availSize)};
+    }
+
+    /**
+     * 获取SD卡的总空间和可用空间
+     *
+     * @return
+     */
+    public static float[] getBlockFromSD() {
+        File path = Environment.getExternalStorageDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long totalBlocks = stat.getBlockCount();
+        long availableBlocks = stat.getAvailableBlocks();
+
+        long totalSize = totalBlocks * blockSize;
+        long availSize = availableBlocks * blockSize;
+
+        return new float[]{totalSize, availSize};
+    }
+
+    /**
+     * 获取手机的总空间和可用空间
+     *
+     * @return
+     */
+    public static float[] getBlockFromBody() {
+        File path = Environment.getDataDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long totalBlocks = stat.getBlockCount();
+        long availableBlocks = stat.getAvailableBlocks();
+
+        long totalSize = totalBlocks * blockSize;
+        long availSize = availableBlocks * blockSize;
+
+        return new float[]{totalSize, availSize};
+    }
+
+    /**
+     * 获取手机的总空间和可用空间
+     *
+     * @param context
+     * @return
+     */
+    public static String[] getBlockFromBody(Context context) {
+        File path = Environment.getDataDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long totalBlocks = stat.getBlockCount();
+        long availableBlocks = stat.getAvailableBlocks();
+
+        long totalSize = totalBlocks * blockSize;
+        long availSize = availableBlocks * blockSize;
+
+        return new String[]{Formatter.formatFileSize(context, totalSize), Formatter.formatFileSize(context, availSize)};
     }
 }

@@ -89,7 +89,7 @@ public class DownloadedAdapter extends BaseAdapter {
         viewHolder.nameText.setText(datasetInfo.getName());
         viewHolder.descText.setText(datasetInfo.getInfo());
         viewHolder.sizeText.setText(datasetInfo.getSize() + "");
-        viewHolder.typeText.setText(datasetInfo.getType());
+        viewHolder.typeText.setText(context.getResources().getStringArray(R.array.type_arr)[Integer.parseInt(datasetInfo.getType())]);
         viewHolder.dateText.setText(datasetInfo.getCovertDate());
 
         fBitmap.display(viewHolder.iconImg, Utils.ICON_DIR + datasetInfo.getIcon());

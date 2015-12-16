@@ -1,10 +1,13 @@
 package com.activels.als.diyappmanager.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +21,10 @@ import com.activels.als.diyappmanager.db.DatasetDao;
 import com.activels.als.diyappmanager.db.DatasetDaoImpl;
 import com.activels.als.diyappmanager.entity.DatasetInfo;
 import com.activels.als.diyappmanager.service.DownloadService;
+import com.activels.als.diyappmanager.utils.FileSizeUtil;
+import com.activels.als.diyappmanager.utils.NetworkUtil;
 import com.activels.als.diyappmanager.utils.SharedPreferencesUtils;
+import com.activels.als.diyappmanager.utils.StringUtil;
 import com.activels.als.diyappmanager.utils.ToastUtil;
 import com.activels.als.diyappmanager.utils.Utils;
 import com.activels.als.diyappmanager.utils.ZipUtil;
@@ -120,17 +126,32 @@ public class DatasetAdapter extends BaseAdapter {
 
                     downloadHandle(datasetInfo, view);
 
-                } else if (Utils.STATE_DOWNLOAGING == state) {//当前下载中，停止
+                } else if (Utils.STATE_DOWNLOAGING == state) {//当前下载中，取消下载
 
                     //停止下载
-                    Intent intent = new Intent(context, DownloadService.class);
-                    intent.setAction(Utils.ACTION_STOP);
-                    intent.putExtra("dataset", datasetInfo);
-                    context.startService(intent);
+//ver 2               Intent intent = new Intent(context, DownloadService.class);
+//                    intent.setAction(Utils.ACTION_STOP);
+//                    intent.putExtra("dataset", datasetInfo);
+//                    context.startService(intent);
+//
+//                    datasetInfo.setOperateState(Utils.STATE_STOP);
+//
+//                    ((MyProgressBar) view).setText(context.getString(R.string.get_text));
 
-                    datasetInfo.setOperateState(Utils.STATE_STOP);
+                    //ver 1 删除下载
+                    new AlertDialog.Builder(context)
+                            .setMessage(Html.fromHtml(context.getString(R.string.msg_abortdlownload_text)
+                                    + "<br><br><font color='#000FFF'>" + datasetInfo.getName() + "</font><br>"))
+                            .setNegativeButton(context.getString(R.string.cancel_text), null)
+                            .setPositiveButton(context.getString(R.string.sure_text), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    if (listener != null)
+                                        listener.absortDownload(datasetInfo);
+                                }
+                            })
+                            .show();
 
-                    ((MyProgressBar) view).setText(context.getString(R.string.get_text));
 
                 } else if (Utils.STATE_UNZIPED == state) {//当前解压完成，预览
 
@@ -165,7 +186,7 @@ public class DatasetAdapter extends BaseAdapter {
         viewHolder.nameText.setText(datasetInfo.getName());
         viewHolder.descText.setText(datasetInfo.getInfo());
         viewHolder.sizeText.setText(datasetInfo.getSize() + "");
-        viewHolder.typeText.setText(datasetInfo.getType());
+        viewHolder.typeText.setText(context.getResources().getStringArray(R.array.type_arr)[Integer.parseInt(datasetInfo.getType())]);
         viewHolder.dateText.setText(datasetInfo.getCovertDate());
         viewHolder.operateBtn.setProgress(datasetInfo.getFinished());
 
@@ -185,8 +206,8 @@ public class DatasetAdapter extends BaseAdapter {
         }
 
         int state = datasetInfo.getOperateState();
-        if (state == Utils.STATE_DOWNLOAGING) {//下载中-停止
-            viewHolder.operateBtn.setText(context.getString(R.string.stop_text));
+        if (state == Utils.STATE_DOWNLOAGING) {//下载中
+            viewHolder.operateBtn.setText(context.getString(R.string.downloading_text));
         } else if (Utils.STATE_UNZIPING == state) {//下载完成-解压中
             viewHolder.operateBtn.setText(context.getString(R.string.decompression_text));
 
@@ -239,7 +260,7 @@ public class DatasetAdapter extends BaseAdapter {
             context.startActivity(intent);
         } catch (Exception e) {
             ToastUtil.toastShort(context, String.format(context.getString(R.string.install_app_first),
-                    Utils.TYPES[type]));
+                    context.getResources().getStringArray(R.array.type_arr)[type]));
         }
     }
 
@@ -256,6 +277,7 @@ public class DatasetAdapter extends BaseAdapter {
             info1.setFinished(0);
             info1.setIsChecked(false);
             info1.setCanDelete(false);
+            info1.setSize(info1.getZipSize());
         }
 
         notifyDataSetChanged();
@@ -267,6 +289,25 @@ public class DatasetAdapter extends BaseAdapter {
      * @param info
      */
     private void downloadHandle(DatasetInfo info, View view) {
+
+        //判断网络是否正常
+        if (!NetworkUtil.isNetworkConnected(context)) {
+            new AlertDialog.Builder(context)
+                    .setMessage(context.getString(R.string.msg_dlerror_text))
+                    .setPositiveButton(context.getString(R.string.sure_text), null)
+                    .show();
+            return;
+        }
+
+        //判断SD空间是否足够
+        float[] block = StringUtil.getBlockFromSD();
+        if (info.getTotalLength() > block[0]) {
+            new AlertDialog.Builder(context)
+                    .setMessage(context.getString(R.string.msg_nospace_text))
+                    .setPositiveButton(context.getString(R.string.sure_text), null)
+                    .show();
+            return;
+        }
 
         isDeleteAll = false;//更新可正常运行
         currentDeleteId = -1;
@@ -280,7 +321,7 @@ public class DatasetAdapter extends BaseAdapter {
         info.setOperateState(Utils.STATE_DOWNLOAGING);
         info.setCanDelete(true);//可以删除了
 
-        ((MyProgressBar) view).setText(context.getString(R.string.stop_text));
+        ((MyProgressBar) view).setText(context.getString(R.string.downloading_text));
     }
 
     /**
@@ -394,15 +435,24 @@ public class DatasetAdapter extends BaseAdapter {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 222) {
-                int datasetId = msg.arg1;
+                final int datasetId = msg.arg1;
 
-                DatasetInfo info = getDatasetByDatasetId(datasetId);
+                final DatasetInfo info = getDatasetByDatasetId(datasetId);
                 if (info != null) {
                     info.setOperateState(Utils.STATE_UNZIPED);
+                    info.setSize("0MB".equals(msg.obj.toString()) ?
+                            info.getZipSize() : msg.obj.toString());
+
+                    notifyDataSetChanged();
 
                     mDatasetDao.updateDataset(info);
 
-                    notifyDataSetChanged();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDatasetDao.updateDatasetSize(datasetId, info.getSize());
+                        }
+                    }, 1000);
                 }
             }
         }
@@ -437,9 +487,15 @@ public class DatasetAdapter extends BaseAdapter {
 
                     srcFile.delete();//删除压缩文件
 
+                    String size = "0MB";
+                    if (new File(dest).exists()) {
+                        size = FileSizeUtil.getFileOrFilesSize(dest, 3) + "MB";//获取文件大小
+                    }
+
                     Message msg = handler.obtainMessage();
                     msg.what = 222;
                     msg.arg1 = datasetId;
+                    msg.obj = size;
                     handler.sendMessage(msg);
 
                 } catch (IOException e) {
@@ -447,5 +503,11 @@ public class DatasetAdapter extends BaseAdapter {
                 }
             }
         }
+    }
+
+    public IDatasetAdapterListener listener;
+
+    public interface IDatasetAdapterListener {
+        public void absortDownload(DatasetInfo info);
     }
 }

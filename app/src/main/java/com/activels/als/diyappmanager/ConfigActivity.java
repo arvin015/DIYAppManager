@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.activels.als.diyappmanager.utils.SharedPreferencesUtils;
 import com.activels.als.diyappmanager.utils.StringUtil;
 import com.activels.als.diyappmanager.utils.ToastUtil;
 import com.activels.als.diyappmanager.utils.Utils;
@@ -18,7 +19,7 @@ public class ConfigActivity extends Activity {
 
     private Context context;
 
-    private EditText pathEdit, codeEdit;
+    private EditText pathEdit;
     private Button saveBtn;
 
     @Override
@@ -35,8 +36,10 @@ public class ConfigActivity extends Activity {
     private void init() {
 
         pathEdit = (EditText) findViewById(R.id.pathEdit);
-        codeEdit = (EditText) findViewById(R.id.codeEdit);
         saveBtn = (Button) findViewById(R.id.saveBtn);
+
+        pathEdit.setText(Utils.httpip);
+        pathEdit.setSelection(Utils.httpip.length());
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,10 +48,10 @@ public class ConfigActivity extends Activity {
                 ToastUtil.toastShort(context, context.getString(R.string.save_success_tip));
 
                 String pathStr = pathEdit.getText().toString().trim();
-                String codeStr = codeEdit.getText().toString().trim();
 
                 if (!StringUtil.isEmpty(pathStr)) {
                     Utils.httpip = pathStr;
+                    SharedPreferencesUtils.getInstance(context, "").saveSharedPreferences(Utils.PATH_NAME, pathStr);
                     Utils.UPDATEPATH();
                 }
 

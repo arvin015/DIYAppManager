@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -47,7 +45,7 @@ public class LoginActivity extends Activity {
     private LinearLayout qrTag, manualTag;
     private TextView qrText, manualText;
     private ImageButton loginBtn, qrBtn;
-    private EditText userEdit, psdEdit;
+    private EditText userEdit, psdEdit, schoolEdit;
     private ToggleButton checkBoxBtn;
     private ImageView guideImg;
     private Button settingBtn;
@@ -95,6 +93,7 @@ public class LoginActivity extends Activity {
         checkBoxBtn = (ToggleButton) findViewById(R.id.checkBoxBtn);
         guideImg = (ImageView) findViewById(R.id.guideImg);
         settingBtn = (Button) findViewById(R.id.settingBtn);
+        schoolEdit = (EditText) findViewById(R.id.schoolEdit);
 
         settingBtn.setOnClickListener(new SettingClick());
 
@@ -160,6 +159,17 @@ public class LoginActivity extends Activity {
     }
 
     /**
+     * 设置路径
+     */
+    private void setDIYToolsPath() {
+        String path = spfu.loadStringSharedPreference(Utils.PATH_NAME);
+        if (!StringUtil.isEmpty(path)) {
+            Utils.httpip = path;
+            Utils.UPDATEPATH();
+        }
+    }
+
+    /**
      * 欢迎页处理
      */
     private void guideHandle() {
@@ -188,6 +198,7 @@ public class LoginActivity extends Activity {
 
         final String userName = userEdit.getText().toString();
         final String psd = psdEdit.getText().toString();
+        final String school = schoolEdit.getText().toString();
 
         if (StringUtil.isEmpty(userName) || StringUtil.isEmpty(psd)) {
             ToastUtil.toastShort(context, getString(R.string.user_or_psd_is_empty));
@@ -210,8 +221,10 @@ public class LoginActivity extends Activity {
                     spfu.saveSharedPreferences(Utils.LOGIN_USER_NAME, userName);
                     if (checkBoxBtn.isChecked()) {
                         spfu.saveSharedPreferences(Utils.LOGIN_PSD, psd);
+                        spfu.saveSharedPreferences(Utils.SCHOOL_NAME, school);
                     } else {
                         spfu.saveSharedPreferences(Utils.LOGIN_PSD, "");
+                        spfu.saveSharedPreferences(Utils.SCHOOL_NAME, "");
                     }
                     spfu.saveSharedPreferences(Utils.AUTO_LOGIN, checkBoxBtn.isChecked());//是否需自动登录
 
@@ -311,8 +324,11 @@ public class LoginActivity extends Activity {
 
         spfu = SharedPreferencesUtils.getInstance(this, "");
 
+        setDIYToolsPath();
+
         String psdStr = spfu.loadStringSharedPreference(Utils.LOGIN_PSD);
         String userStr = spfu.loadStringSharedPreference(Utils.LOGIN_USER_NAME);
+        String schoolStr = spfu.loadStringSharedPreference(Utils.SCHOOL_NAME);
 
         userEdit.setText(userStr);
 
@@ -321,6 +337,7 @@ public class LoginActivity extends Activity {
         } else {
             checkBoxBtn.setChecked(true);
             psdEdit.setText(psdStr);
+            schoolEdit.setText(schoolStr);
         }
 
         userEdit.setSelection(StringUtil.isEmpty(userStr) ? 0 : userStr.length());

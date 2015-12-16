@@ -1,6 +1,8 @@
 package com.activels.als.diyappmanager.uihelper;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -84,8 +86,15 @@ public class BatchDeleteHelper {
                     return;
                 }
 
-                if (listener != null)
-                    listener.onDeleteClick();
+                new AlertDialog.Builder(context).setMessage(context.getString(R.string.delete_all_the_selected_Apps))
+                        .setNegativeButton(context.getString(R.string.cancel_text), null)
+                        .setPositiveButton(context.getString(R.string.sure_text), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (listener != null)
+                                    listener.onDeleteClick();
+                            }
+                        }).show();
             }
         });
     }

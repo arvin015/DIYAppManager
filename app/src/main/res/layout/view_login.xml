@@ -187,6 +187,17 @@
                         android:textColor="#000000"
                         android:textSize="24sp" />
 
+                    <EditText
+                        android:id="@+id/schoolEdit"
+                        android:layout_width="600dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="55dp"
+                        android:singleLine="true"
+                        android:text="developmentschool01"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+
                     <LinearLayout
                         android:layout_width="600dp"
                         android:layout_height="wrap_content"
@@ -228,13 +239,12 @@
 
     <Button
         android:id="@+id/settingBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom|left"
         android:layout_marginBottom="50dp"
-        android:layout_marginRight="30dp"
-        android:background="@null"
-        android:textSize="28sp" />
+        android:layout_marginLeft="30dp"
+        android:background="@null" />
 
     <ImageView
         android:id="@+id/guideImg"

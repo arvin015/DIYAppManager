@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">DIYAppManager</string>
+    <string name="app_name">我的课件</string>
     <string name="version_name">DIYAppManager_v0.0.1_b1</string>
 
     <string name="hello_world">Hello world!</string>
@@ -9,15 +9,15 @@
     <string name="desc_text">描述：</string>
     <string name="type_text">类型：</string>
     <string name="date_text">时间：</string>
-    <string name="size_text">大小：</string>
+    <string name="size_text">档案大小：</string>
 
     <string name="get_text">下载</string>
     <string name="update_text">更新</string>
     <string name="preview_text">预览</string>
-    <string name="stop_text">停止</string>
+    <string name="downloading_text">下载中</string>
     <string name="decompression_text">解压中</string>
 
-    <string name="loadmore_text">加载更多...</string>
+    <string name="loadmore_text">读取更多...</string>
 
     <string name="app_type_text">类型</string>
 
@@ -49,14 +49,15 @@
     <string name="cancel_text">取消</string>
     <string name="sure_text">确定</string>
 
-    <string name="manage_text">管理应用</string>
+    <string name="manage_text">管理已下载课件</string>
     <string name="select_all_text">全选</string>
     <string name="select_no_one_text">全不选</string>
     <string name="delete_text">刪除</string>
     <string name="selected_size_text">选中大小 </string>
     <string name="back_text">返回</string>
     <string name="no_subject_selected_text">请选择需要删除的对象！</string>
-    <string name="deleted_text">已下载</string>
+    <string name="deleted_text">已删除</string>
+    <string name="delete_all_the_selected_Apps">删除所有选中的课件？</string>
 
     <string name="install_app_first">请先安装 %s 应用程序！</string>
     <string name="file_not_exist">%s文件不存在，请确保SD卡中存在该文件！</string>
@@ -68,20 +69,24 @@
 
     <string name="sort_text">排序</string>
     <string name="last_modified_time">最后修改时间</string>
-    <string name="search_app_text">搜索应用</string>
-    <string name="all_app_types">全部类型</string>
+    <string name="search_app_text">搜寻我的课件</string>
+    <string name="all_app_types">所有课件类别</string>
+
+    <string name="msg_nospace_text">没有足够容量下载所选课件，请点选「管理已下载课件」并删除一些资料后再试。</string>
+    <string name="msg_dlerror_text">下载课件时发生错误，请检查连线状况及重新整理课件列表，然后再试。</string>
+    <string name="msg_abortdlownload_text">是否要停止下载以下课件？</string>
 
     <array name="sort_arr">
-        <item>最后修改时间</item>
-        <item>应用名称</item>
+        <item>最近更新日期</item>
+        <item>课件名称</item>
     </array>
 
     <array name="type_arr">
-        <item>全部类型</item>
-        <item>eBook</item>
-        <item>Draw Something</item>
-        <item>Card Send</item>
-        <item>Video Quiz</item>
+        <item>所有课件类别</item>
+        <item>电子书</item>
+        <item>手写绘画</item>
+        <item>分组排卡</item>
+        <item>影视抢答</item>
     </array>
 
 </resources>

@@ -43,6 +43,13 @@ public class DatasetDaoImpl implements DatasetDao {
     }
 
     @Override
+    public synchronized void updateDatasetSize(int datasetId, String size) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("update dataset_info set size=? where dataset_id=?", new Object[]{size, datasetId});
+        db.close();
+    }
+
+    @Override
     public DatasetInfo selectDatasetByDatasetId(int datasetId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from dataset_info where dataset_id = ?", new String[]{datasetId + ""});
@@ -53,7 +60,8 @@ public class DatasetDaoImpl implements DatasetDao {
                     cursor.getInt(cursor.getColumnIndex("dataset_id")),
                     cursor.getString(cursor.getColumnIndex("date")),
                     cursor.getInt(cursor.getColumnIndex("state")),
-                    cursor.getInt(cursor.getColumnIndex("finished"))
+                    cursor.getInt(cursor.getColumnIndex("finished")),
+                    cursor.getString(cursor.getColumnIndex("size"))
             );
 
             db.close();
@@ -87,7 +95,7 @@ public class DatasetDaoImpl implements DatasetDao {
 
         Cursor cursor;
 
-        if (Utils.TYPES[0].equals(type)) {
+        if ((0 + "").equals(type)) {
             cursor = db.rawQuery("select * from dataset_info where state > ?", new String[]{Utils.STATE_DOWNLOAGING + ""});
         } else {
             cursor = db.rawQuery("select * from dataset_info where state > ? and type = ?", new String[]{Utils.STATE_DOWNLOAGING + "", type});

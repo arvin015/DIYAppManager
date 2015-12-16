@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -296,6 +295,12 @@ public class MainActivity extends BaseActivity {
 
         datasetInfoList = new ArrayList<>();
         datasetAdapter = new DatasetAdapter(context, datasetInfoList, fBitmap);
+        datasetAdapter.listener = new DatasetAdapter.IDatasetAdapterListener() {
+            @Override
+            public void absortDownload(DatasetInfo info) {
+                deleteDatasetHandle(info);
+            }
+        };
         if (gridView != null) {
             gridView.setAdapter(datasetAdapter);
         }
@@ -577,7 +582,7 @@ public class MainActivity extends BaseActivity {
         }
 
         waitDialog.updateMessage(getString(R.string.deleted_text) +
-                "(" + batchDeleteHelper.selectedNum + "/" + downloadedDatasetList.size());
+                "(" + batchDeleteHelper.selectedNum + "/" + downloadedDatasetList.size() + ")");
         waitDialog.setListener(new WaitDialogHelper.IWaitDialogHelper() {
             @Override
             public void close() {
@@ -755,7 +760,7 @@ public class MainActivity extends BaseActivity {
     private void loadDataFromLocal(int index) {
         //获取相应的分类dataset集合
         downloadedDatasetList.clear();
-        downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset(Utils.TYPES[index]));
+        downloadedDatasetList.addAll(mDatasetDao.getAllDownloadedDataset(index + ""));
 
         //对应的分类没有则为空提示
         if (downloadedDatasetList.size() < 1) {
@@ -870,10 +875,14 @@ public class MainActivity extends BaseActivity {
                                             state = Utils.STATE_STOP;
                                         }
 
-                                        //服务器上的时间比已经下载好本地时间要新，则需更新
-                                        if (Utils.STATE_UNZIPED == state &&
-                                                StringUtil.compareTime(info.getDate(), d.getDate())) {
-                                            state = Utils.STATE_UPDATE;
+                                        if (Utils.STATE_UNZIPED == state) {
+
+                                            //服务器上的时间比已经下载好本地时间要新，则需更新
+                                            if (StringUtil.compareTime(info.getDate(), d.getDate())) {
+                                                state = Utils.STATE_UPDATE;
+                                            } else { //下载完了，则显示解压后的大小
+                                                info.setSize(d.getSize());
+                                            }
                                         }
 
                                         info.setOperateState(state);
@@ -952,8 +961,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        Log.d("print", "onDestroy");
 
         clear();
     }

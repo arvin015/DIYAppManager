@@ -76,7 +76,7 @@ public class MainActivity_old extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                choiceHandle(view, 1, Utils.TYPES);
+                choiceHandle(view, 1, context.getResources().getStringArray(R.array.type_arr));
             }
         });
 

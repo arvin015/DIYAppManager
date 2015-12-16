@@ -35,16 +35,18 @@ public class Utils {
 
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/downloads";
 
-    public static final String[] TYPES = new String[]{"All App Types", "eBook",
-            "Draw Something", "Card Send", "Video Quiz"};
+//    public static final String[] TYPES = new String[]{"All App Types", "eBook",
+//            "Draw Something", "Card Send", "Video Quiz"};
 
-    public static final String[] SORTS = new String[]{
-            "Last Modified Date", "App Name"
-    };
+//    public static final String[] SORTS = new String[]{
+//            "Last Modified Date", "App Name"
+//    };
 
     public static final String LOGIN_USER_NAME = "userName";
     public static final String LOGIN_PSD = "psd";
     public static final String AUTO_LOGIN = "auto_login";
+    public static final String SCHOOL_NAME = "school_name";
+    public static final String PATH_NAME = "path_name";
 
     public static final String token = "2000000";
     public static final int count = 14;   //每页显示的数量

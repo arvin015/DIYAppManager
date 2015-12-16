@@ -40,27 +40,6 @@
                 android:layout_weight="4" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="CLS School Code"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/codeEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4" />
-
-        </LinearLayout>
     </LinearLayout>
 
     <Button

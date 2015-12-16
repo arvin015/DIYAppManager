@@ -27,7 +27,8 @@ public class DatasetInfo implements Serializable {
     private String date;  //时间
     private String link;  //下载链接
     private String md5;   //MD5
-    private String size;    //大小
+    private String size;  //大小
+    private String zipSize;//压缩的大小
     private String covertDate;//格式化时间
 
     private int typeIndex;//类型索引
@@ -43,21 +44,6 @@ public class DatasetInfo implements Serializable {
     public DatasetInfo() {
     }
 
-    public DatasetInfo(int id, String name, String icon, String info,
-                       String type, String date, String link, String md5, int size) {
-        this.id = id;
-        this.name = name;
-        this.icon = icon;
-        this.info = info;
-        this.type = type;
-        this.date = date;
-        this.link = link;
-        this.md5 = md5;
-        this.size = size + "";
-        this.totalLength = size;
-        this.covertDate = StringUtil.convertTimeStumpToDate(date);
-    }
-
     public DatasetInfo(JSONObject json) {
         if (json == null) {
             return;
@@ -68,11 +54,12 @@ public class DatasetInfo implements Serializable {
         this.icon = json.optString("icon");
         this.info = json.optString("info");
         this.date = json.optString("date");
-        this.type = Utils.TYPES[json.optInt("type")];
+        this.type = json.optInt("type") + "";
         this.link = json.optString("link");
         this.md5 = json.optString("md5");
         this.totalLength = json.optInt("size");
         this.size = StringUtil.bytes2mb(json.optInt("size"));
+        this.zipSize = this.size;
 
         this.typeIndex = json.optInt("type");
         this.covertDate = StringUtil.convertTimeStumpToDate(date);
@@ -98,11 +85,12 @@ public class DatasetInfo implements Serializable {
         this.datasetName = zipDatasetName.substring(0, zipDatasetName.lastIndexOf("."));
     }
 
-    public DatasetInfo(int id, String date, int operateState, int finished) {
+    public DatasetInfo(int id, String date, int operateState, int finished, String size) {
         this.id = id;
         this.date = date;
         this.operateState = operateState;
         this.finished = finished;
+        this.size = size;
     }
 
     public int getId() {
@@ -255,6 +243,14 @@ public class DatasetInfo implements Serializable {
 
     public void setTypeIndex(int typeIndex) {
         this.typeIndex = typeIndex;
+    }
+
+    public String getZipSize() {
+        return zipSize;
+    }
+
+    public void setZipSize(String zipSize) {
+        this.zipSize = zipSize;
     }
 
     /**

@@ -27,6 +27,14 @@ public interface DatasetDao {
     public void updateDataset(DatasetInfo datasetInfo);
 
     /**
+     * 更新大小
+     *
+     * @param datasetId
+     * @param size
+     */
+    public void updateDatasetSize(int datasetId, String size);
+
+    /**
      * 查询执行文件ID的文件信息
      *
      * @param datasetId
