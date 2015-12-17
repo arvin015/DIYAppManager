@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.activels.als.diyappmanager.adapter.DatasetAdapter;
 import com.activels.als.diyappmanager.adapter.DownloadedAdapter;
 import com.activels.als.diyappmanager.adapter.TypeAdapter;
+import com.activels.als.diyappmanager.db.DBHelper;
 import com.activels.als.diyappmanager.db.DatasetDao;
 import com.activels.als.diyappmanager.db.DatasetDaoImpl;
 import com.activels.als.diyappmanager.db.ThreadDao;
@@ -105,6 +106,9 @@ public class MainActivity extends BaseActivity {
     private WaitDialogHelper waitDialog;
 
     private Set<DatasetInfo> infoList = new LinkedHashSet<>();
+
+    private int deleteNum = 0; //当前删除个数
+    private int selectNum = 0; //总共需删除个数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -561,13 +565,16 @@ public class MainActivity extends BaseActivity {
      */
     private void deleteDownloadedDataset(final boolean isAll) {
 
+        selectNum = batchDeleteHelper.selectedNum;
+        deleteNum = 0;
+
         //删除显示框
         if (waitDialog == null) {
             waitDialog = new WaitDialogHelper(context);
         }
 
         waitDialog.updateMessage(getString(R.string.deleted_text) +
-                "(" + batchDeleteHelper.selectedNum + "/" + downloadedDatasetList.size() + ")");
+                "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")");
         waitDialog.setListener(new WaitDialogHelper.IWaitDialogHelper() {
             @Override
             public void close() {
@@ -622,7 +629,9 @@ public class MainActivity extends BaseActivity {
                             info.setOperateState(0);
                             info.setIsChecked(false);
 
+                            deleteNum++;
                             batchDeleteHelper.selectedNum--;
+                            batchDeleteHelper.totalNum--;
 
                             deletedDatasetList.add(info);
 
@@ -630,7 +639,7 @@ public class MainActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     waitDialog.updateMessage(getString(R.string.deleted_text) +
-                                            "(" + batchDeleteHelper.selectedNum + "/" + batchDeleteHelper.totalNum + ")");
+                                            "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")");
                                 }
                             });
                         }
@@ -965,6 +974,13 @@ public class MainActivity extends BaseActivity {
      * 清除下载信息
      */
     private void clear() {
+
+        try {
+            DBHelper.getInstance(context).getWritableDatabase().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //退出时保存dataset下载记录
         Intent intent = new Intent(context, DownloadService.class);
         intent.setAction(Utils.ACTION_QUIT);

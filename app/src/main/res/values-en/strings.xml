@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">My DIY Apps</string>
-    <string name="version_name">ALS_DIYAppManager_v0.0.2_b2</string>
+    <string name="version_name">ALS_DIYAppManager_v0.0.3_b3</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Config</string>

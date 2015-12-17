@@ -28,21 +28,21 @@ public class ThreadDaoImpl implements ThreadDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("insert into thread_info(thread_id,url,start,end,finished) values(?, ?, ?, ?, ?)", new Object[]{threadInfo.getId(), threadInfo.getUrl(),
                 threadInfo.getStart(), threadInfo.getEnd(), threadInfo.getFinished()});
-        db.close();
+//        db.close();
     }
 
     @Override
     public synchronized void deleteThread(String url) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("delete from thread_info where url = ?", new String[]{url});
-        db.close();
+//        db.close();
     }
 
     @Override
     public synchronized void deleteAllThread() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("delete from thread_info");
-        db.close();
+//        db.close();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ThreadDaoImpl implements ThreadDao {
         db.execSQL("update thread_info set finished=? where thread_id = ? and url = ?", new Object[]{
                 finished, id, url
         });
-        db.close();
+//        db.close();
     }
 
     @Override
@@ -73,6 +73,8 @@ public class ThreadDaoImpl implements ThreadDao {
 
             threadInfoList.add(threadInfo);
         }
+        cursor.close();
+//        db.close();
 
         return threadInfoList;
     }
@@ -96,19 +98,29 @@ public class ThreadDaoImpl implements ThreadDao {
 
             threadInfoList.add(threadInfo);
         }
+        cursor.close();
+//        db.close();
 
         return threadInfoList;
     }
 
     @Override
     public boolean isExists(int id, String url) {
+
+        boolean isExist = false;
+
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from thread_info where thread_id = ? and url = ?", new String[]{id + "", url});
 
-        if (cursor.moveToNext())
-            return true;
+        if (cursor.moveToNext()) {
 
-        return false;
+            isExist = true;
+        }
+
+        cursor.close();
+//        db.close();
+
+        return isExist;
 
     }
 }

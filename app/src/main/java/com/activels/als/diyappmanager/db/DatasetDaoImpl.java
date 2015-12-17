@@ -31,7 +31,7 @@ public class DatasetDaoImpl implements DatasetDao {
                 " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new Object[]{datasetInfo.getId(), datasetInfo.getDate(), datasetInfo.getFinished(),
                 datasetInfo.getOperateState(), datasetInfo.getIcon(), datasetInfo.getName(), datasetInfo.getInfo(),
                 datasetInfo.getType(), datasetInfo.getSize(), datasetInfo.getLink()});
-        db.close();
+//        db.close();
     }
 
     @Override
@@ -39,14 +39,14 @@ public class DatasetDaoImpl implements DatasetDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("update dataset_info set finished=?, state=? where dataset_id=?", new Object[]{datasetInfo.getFinished(),
                 datasetInfo.getOperateState(), datasetInfo.getId()});
-        db.close();
+//        db.close();
     }
 
     @Override
     public synchronized void updateDatasetSize(int datasetId, String size) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("update dataset_info set size=? where dataset_id=?", new Object[]{size, datasetId});
-        db.close();
+//        db.close();
     }
 
     @Override
@@ -64,12 +64,11 @@ public class DatasetDaoImpl implements DatasetDao {
                     cursor.getString(cursor.getColumnIndex("size"))
             );
 
-            db.close();
-
             return info;
         }
 
-        db.close();
+        cursor.close();
+//        db.close();
 
         return null;
     }
@@ -78,14 +77,14 @@ public class DatasetDaoImpl implements DatasetDao {
     public synchronized void deleteDatasetByDatasetId(int datasetId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("delete from dataset_info where dataset_id=?", new String[]{"" + datasetId});
-        db.close();
+//        db.close();
     }
 
     @Override
     public synchronized void deleteAllDownloadingDataset() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("delete from dataset_info where state < ?", new String[]{"" + Utils.STATE_UNZIPED});
-        db.close();
+//        db.close();
     }
 
     @Override
@@ -121,7 +120,8 @@ public class DatasetDaoImpl implements DatasetDao {
             infoList.add(info);
         }
 
-        db.close();
+        cursor.close();
+//        db.close();
 
         return infoList;
     }
