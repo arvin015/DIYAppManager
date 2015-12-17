@@ -27,7 +27,7 @@ public class BatchDeleteHelper {
     private Button cancelBtn;
     private TextView countText;
     public ToggleButton selectAllBtn;
-    public Button deleteBtn;
+    public Button deleteBtn, deleteAllBtn;
 
     private Animation topInAnim;
     private Animation topOutAnim;
@@ -47,6 +47,7 @@ public class BatchDeleteHelper {
         topContainer = (FrameLayout) mainView.findViewById(R.id.topContainer);
         cancelBtn = (Button) mainView.findViewById(R.id.cancelBtn);
         deleteBtn = (Button) mainView.findViewById(R.id.deleteBtn);
+        deleteAllBtn = (Button) mainView.findViewById(R.id.deleteAllBtn);
         countText = (TextView) mainView.findViewById(R.id.countText);
         selectAllBtn = (ToggleButton) mainView.findViewById(R.id.selectAllBtn);
 
@@ -93,6 +94,25 @@ public class BatchDeleteHelper {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (listener != null)
                                     listener.onDeleteClick();
+                            }
+                        }).show();
+            }
+        });
+
+        deleteAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (totalSize == 0) {
+                    return;
+                }
+
+                new AlertDialog.Builder(context).setMessage(context.getString(R.string.delete_all_tip_text))
+                        .setNegativeButton(context.getString(R.string.cancel_text), null)
+                        .setPositiveButton(context.getString(R.string.sure_text), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (listener != null)
+                                    listener.onDeleteAllClick();
                             }
                         }).show();
             }
@@ -191,6 +211,8 @@ public class BatchDeleteHelper {
         void onSelectAllClick(boolean isChecked);
 
         void onDeleteClick();
+
+        void onDeleteAllClick();
     }
 
 }

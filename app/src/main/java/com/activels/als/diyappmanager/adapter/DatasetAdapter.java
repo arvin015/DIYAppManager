@@ -52,7 +52,6 @@ public class DatasetAdapter extends BaseAdapter {
     private FinalBitmap fBitmap;
 
     public boolean isScrolling = false;//是否滑动中
-    public boolean isDeleteAll = false;//是否执行了删除所有操作
     public int currentDeleteId = -1;//当前需要删除的dataset
 
     private DatasetDao mDatasetDao;
@@ -334,7 +333,6 @@ public class DatasetAdapter extends BaseAdapter {
             return;
         }
 
-        isDeleteAll = false;//更新可正常运行
         currentDeleteId = -1;
 
         //启动后台Service开始下载
@@ -400,9 +398,6 @@ public class DatasetAdapter extends BaseAdapter {
      * @param infoList
      */
     public void downloadCompletedBatch(Set<DatasetInfo> infoList) {
-        if (isDeleteAll) {
-            return;
-        }
 
         if (infoList.size() > 0) {
             for (DatasetInfo datasetInfo : infoList) {
@@ -432,26 +427,6 @@ public class DatasetAdapter extends BaseAdapter {
         }
 
         return null;
-    }
-
-    /**
-     * 重设列表
-     */
-    public void resetDatasetList() {
-
-        isDeleteAll = true;
-
-        for (DatasetInfo info : datasetInfoList) {
-
-            if (!info.isLocked()) {
-                info.setOperateState(Utils.STATE_STOP);
-                info.setFinished(0);
-                info.setCanDelete(false);
-            }
-
-        }
-
-        notifyDataSetChanged();
     }
 
     //解压完成处理

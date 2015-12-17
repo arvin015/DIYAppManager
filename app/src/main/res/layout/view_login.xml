@@ -192,6 +192,7 @@
                         android:layout_width="600dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:background="@drawable/login_manual_school_box"
                         android:paddingLeft="55dp"
                         android:singleLine="true"
                         android:text="developmentschool01"
@@ -228,7 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/login_manual_btn_login" />
+                        android:background="@drawable/login_btn_selector" />
 
                 </LinearLayout>
 

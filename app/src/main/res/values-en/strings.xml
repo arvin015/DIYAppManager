@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">My DIY Apps</string>
-    <string name="version_name">DIYAppManager_v0.0.1_b1</string>
+    <string name="version_name">ALS_DIYAppManager_v0.0.2_b2</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Config</string>
@@ -28,7 +28,7 @@
     <string name="manual_login">Manual Login</string>
     <string name="username_text">Username</string>
     <string name="password_text">Password</string>
-    <string name="remember_name_text">Remember user name and password</string>
+    <string name="remember_name_text">Remember login credentials</string>
     <string name="scanning_tip_text">Please scan the QR code</string>
     <string name="scanning_fail_text">Scan Fail!</string>
 
@@ -46,19 +46,20 @@
 
     <string name="press_again_to_quit">Then press one, exit the program!</string>
 
-    <string name="delete_all_tip_text">Are you sure you want to delete all of the application?</string>
     <string name="cancel_text">Cancel</string>
     <string name="sure_text">Confirm</string>
 
     <string name="manage_text">Manage Downloaded Apps</string>
     <string name="select_all_text">Select All</string>
     <string name="select_no_one_text">Select No One</string>
-    <string name="delete_text">Delete</string>
+    <string name="delete_text">Delete Selected</string>
+    <string name="delete_all_text">Delete All</string>
     <string name="selected_size_text">Selected data size </string>
     <string name="back_text">Back</string>
     <string name="no_subject_selected_text">Select the object you need to delete!</string>
     <string name="deleted_text">Deleting downloaded apps </string>
     <string name="delete_all_the_selected_Apps">Delete all the selected Apps?</string>
+    <string name="delete_all_tip_text">Delete ALL the downloaded Apps?</string>
 
     <string name="install_app_first">Please install the %s application!</string>
     <string name="file_not_exist">The file %s does not exist. Please make sure that the file is in the SD card</string>
@@ -78,8 +79,8 @@
     <string name="msg_abortdlownload_text">Do you want to stop downloading the following app?</string>
 
     <array name="sort_arr">
-        <item>Last Modified Date</item>
-        <item>App Name</item>
+        <item>Last Modified Date(D)</item>
+        <item>App Name(N)</item>
     </array>
 
     <array name="type_arr">

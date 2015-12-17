@@ -45,6 +45,20 @@
             android:textColor="#FFFFFF"
             android:textOff="@string/select_all_text"
             android:textOn="@string/select_no_one_text"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/deleteAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/delete_grey_shape"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/delete_all_text"
+            android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
         <Button
@@ -53,6 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/delete_grey_shape"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="@string/delete_text"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />

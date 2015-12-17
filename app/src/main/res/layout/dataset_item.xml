@@ -141,7 +141,7 @@
             <com.activels.als.diyappmanager.view.MyProgressBar
                 android:id="@+id/operateBtn"
                 style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="60dp"
+                android:layout_width="@dimen/progressbar_width"
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:progressDrawable="@drawable/progressbar_style" />

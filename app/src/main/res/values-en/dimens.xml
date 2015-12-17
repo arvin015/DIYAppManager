@@ -9,6 +9,5 @@
     <dimen name="header_footer_left_right_padding">24dp</dimen>
     <dimen name="header_footer_top_bottom_padding">20dp</dimen>
 
-    <dimen name="progressbar_width">60dp</dimen>
-
+    <dimen name="progressbar_width">130dp</dimen>
 </resources>

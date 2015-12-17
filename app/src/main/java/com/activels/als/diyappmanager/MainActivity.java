@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +48,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -107,24 +105,6 @@ public class MainActivity extends BaseActivity {
     private WaitDialogHelper waitDialog;
 
     private Set<DatasetInfo> infoList = new LinkedHashSet<>();
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 200) {
-                closeDialog();
-                datasetAdapter.resetDatasetList();
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        datasetAdapter.isDeleteAll = false;
-                    }
-                }, 2000);
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -339,7 +319,12 @@ public class MainActivity extends BaseActivity {
 
                 @Override
                 public void onDeleteClick() {
-                    deleteDownloadedDataset();
+                    deleteDownloadedDataset(false);
+                }
+
+                @Override
+                public void onDeleteAllClick() {
+                    deleteDownloadedDataset(true);
                 }
             });
         }
@@ -536,45 +521,45 @@ public class MainActivity extends BaseActivity {
         datasetAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * 删除所有dataset操作
-     */
-    private void deleteAllHandle() {
-
-        showDialog(getString(R.string.login_waiting));
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(context, DownloadService.class);
-                intent.setAction(Utils.ACTION_STOP_ALL_UNLOCKED);
-                intent.putExtra("datasetList", (Serializable) datasetInfoList);
-                context.startService(intent);
-
-                //删除未上锁并且已下载的dataset的本地保存及文件
-                for (DatasetInfo info : datasetInfoList) {
-                    if (info.isCanDelete() && !info.isLocked()) {
-
-                        mDatasetDao.deleteDatasetByDatasetId(info.getId());
-
-                        File zipFile = new File(Utils.DOWNLOAD_PATH, info.getZipDatasetName());
-                        if (zipFile.exists())
-                            FileUtils.deleteFile(zipFile.getAbsolutePath());
-
-                        File datasetFile = new File(Utils.DOWNLOAD_PATH, info.getDatasetName());
-                        FileUtils.deleteDir(datasetFile.getAbsolutePath());
-                    }
-                }
-
-                handler.sendEmptyMessage(200);
-            }
-        }).start();
-    }
+//    /**
+//     * 删除所有dataset操作
+//     */
+//    private void deleteAllHandle() {
+//
+//        showDialog(getString(R.string.login_waiting));
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Intent intent = new Intent(context, DownloadService.class);
+//                intent.setAction(Utils.ACTION_STOP_ALL_UNLOCKED);
+//                intent.putExtra("datasetList", (Serializable) datasetInfoList);
+//                context.startService(intent);
+//
+//                //删除未上锁并且已下载的dataset的本地保存及文件
+//                for (DatasetInfo info : datasetInfoList) {
+//                    if (info.isCanDelete() && !info.isLocked()) {
+//
+//                        mDatasetDao.deleteDatasetByDatasetId(info.getId());
+//
+//                        File zipFile = new File(Utils.DOWNLOAD_PATH, info.getZipDatasetName());
+//                        if (zipFile.exists())
+//                            FileUtils.deleteFile(zipFile.getAbsolutePath());
+//
+//                        File datasetFile = new File(Utils.DOWNLOAD_PATH, info.getDatasetName());
+//                        FileUtils.deleteDir(datasetFile.getAbsolutePath());
+//                    }
+//                }
+//            }
+//        }).start();
+//    }
 
     /**
      * 删除选中的已下载的dataset
+     *
+     * @param isAll
      */
-    private void deleteDownloadedDataset() {
+    private void deleteDownloadedDataset(final boolean isAll) {
 
         //删除显示框
         if (waitDialog == null) {
@@ -606,7 +591,18 @@ public class MainActivity extends BaseActivity {
             @Override
             public void run() {
                 if (downloadedDatasetList != null) {
+
+                    if (isAll) {
+                        batchDeleteHelper.selectedSize = batchDeleteHelper.totalSize;
+                        batchDeleteHelper.selectedNum = batchDeleteHelper.totalNum;
+                    }
+
                     for (DatasetInfo info : downloadedDatasetList) {
+
+                        //刪除所有
+                        if (isAll) {
+                            info.setIsChecked(true);
+                        }
 
                         if (info.isChecked()) {
 

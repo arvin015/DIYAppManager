@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">我的课件</string>
-    <string name="version_name">DIYAppManager_v0.0.1_b1</string>
+    <string name="version_name">ALS_DIYAppManager_v0.0.2_b2</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">配置</string>
@@ -19,7 +19,7 @@
 
     <string name="loadmore_text">读取更多...</string>
 
-    <string name="app_type_text">类型</string>
+    <string name="app_type_text">课件类别</string>
 
     <string name="app_title">登入DIY系统</string>
     <string name="scanning_text">扫描QR code</string>
@@ -45,7 +45,6 @@
 
     <string name="press_again_to_quit">再按一次，退出程序！</string>
 
-    <string name="delete_all_tip_text">确定删除所有应用？</string>
     <string name="cancel_text">取消</string>
     <string name="sure_text">确定</string>
 
@@ -53,11 +52,13 @@
     <string name="select_all_text">全选</string>
     <string name="select_no_one_text">全不选</string>
     <string name="delete_text">刪除</string>
+    <string name="delete_all_text">刪除所有</string>
     <string name="selected_size_text">选中大小 </string>
     <string name="back_text">返回</string>
     <string name="no_subject_selected_text">请选择需要删除的对象！</string>
     <string name="deleted_text">已删除</string>
     <string name="delete_all_the_selected_Apps">删除所有选中的课件？</string>
+    <string name="delete_all_tip_text">删除所有已下载的课件？</string>
 
     <string name="install_app_first">请先安装 %s 应用程序！</string>
     <string name="file_not_exist">%s文件不存在，请确保SD卡中存在该文件！</string>
