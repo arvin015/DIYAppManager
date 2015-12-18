@@ -183,11 +183,11 @@ public class DownloadTask {
 
                         threadInfo.setFinished(threadInfo.getFinished() + len);//累加该线程下载进度
 
-                        if (System.currentTimeMillis() - lastTime > 1000) {
+                        if (System.currentTimeMillis() - lastTime > 1500) {
 
                             datasetInfo.setFinished(finished * 100 / datasetInfo.getTotalLength());
 
-                            //1秒发送一次广播通知Activity更新下载进度
+                            //1.5秒发送一次广播通知Activity更新下载进度
                             intent.putExtra("dataset", datasetInfo);
 
                             context.sendBroadcast(intent);

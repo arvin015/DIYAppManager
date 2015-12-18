@@ -278,7 +278,7 @@ public class MainActivity extends BaseActivity {
         });
 
         datasetInfoList = new ArrayList<>();
-        datasetAdapter = new DatasetAdapter(context, datasetInfoList, fBitmap);
+        datasetAdapter = new DatasetAdapter(context, datasetInfoList, fBitmap, gridView);
         datasetAdapter.listener = new DatasetAdapter.IDatasetAdapterListener() {
             @Override
             public void absortDownload(DatasetInfo info) {
@@ -664,6 +664,9 @@ public class MainActivity extends BaseActivity {
         showDialog(getString(R.string.login_waiting));
 
         if (mode == 0) {
+
+            clear();//清除所有下载记录
+
             datasetInfoList.clear();
             datasetAdapter.notifyDataSetChanged();
 

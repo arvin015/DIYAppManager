@@ -36,15 +36,16 @@
     <string name="logout_tip_text">Are you sure you want to Logout?</string>
 
     <string name="login_waiting">Please later...</string>
-    <string name="user_or_psd_is_empty">User name and Password can not be empty!</string>
-    <string name="user_or_psd_is_incorrect">User name or password is incorrect!</string>
+    <string name="user_or_psd_is_empty">User name and Password can not be empty.</string>
+    <string name="user_or_psd_is_incorrect">Login failed. Please check whether your login name and password are correct.</string>
+    <string name="network_not_connection">Login failed. Please check your network connection and if you have input the correct School Code.</string>
     <string name="login_success">Login success！</string>
 
     <string name="load_all_text">All data is loaded!</string>
     <string name="empty_tip_text">Data is empty!</string>
-    <string name="network_not_connected">Network is not connected, please check the network!</string>
+    <string name="network_not_connected">Network is not connected, please check the network.</string>
 
-    <string name="press_again_to_quit">Then press one, exit the program!</string>
+    <string name="press_again_to_quit">Then press one, exit the program.</string>
 
     <string name="cancel_text">Cancel</string>
     <string name="sure_text">Confirm</string>
@@ -56,18 +57,18 @@
     <string name="delete_all_text">Delete All</string>
     <string name="selected_size_text">Selected data size </string>
     <string name="back_text">Back</string>
-    <string name="no_subject_selected_text">Select the object you need to delete!</string>
+    <string name="no_subject_selected_text">Select the object you need to delete.</string>
     <string name="deleted_text">Deleting downloaded apps </string>
     <string name="delete_all_the_selected_Apps">Delete all the selected Apps?</string>
     <string name="delete_all_tip_text">Delete ALL the downloaded Apps?</string>
 
     <string name="install_app_first">Please install the %s application!</string>
-    <string name="file_not_exist">The file %s does not exist. Please make sure that the file is in the SD card</string>
+    <string name="file_not_exist">The file %s does not exist. Please make sure that the file is in the SD card.</string>
 
     <string name="config_text">Config</string>
     <string name="config_title_text">System Config</string>
     <string name="save_and_return_text">Save And Return</string>
-    <string name="save_success_tip">Save Success!</string>
+    <string name="save_success_tip">Save Success.</string>
 
     <string name="sort_text">Sort by</string>
     <string name="last_modified_time">Last Modified Date</string>

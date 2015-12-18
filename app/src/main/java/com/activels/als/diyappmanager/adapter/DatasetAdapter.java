@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -46,6 +47,7 @@ public class DatasetAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<DatasetInfo> datasetInfoList;
+    private GridView gridView;
 
     private List<String> zipingDatasetList;
 
@@ -57,10 +59,11 @@ public class DatasetAdapter extends BaseAdapter {
     private DatasetDao mDatasetDao;
 
     public DatasetAdapter(Context context, List<DatasetInfo> datasetInfoList,
-                          FinalBitmap fBitmap) {
+                          FinalBitmap fBitmap, GridView gridView) {
         this.context = context;
         this.datasetInfoList = datasetInfoList;
         this.fBitmap = fBitmap;
+        this.gridView = gridView;
 
         mDatasetDao = new DatasetDaoImpl(context);
         zipingDatasetList = new LinkedList<>();
@@ -196,6 +199,8 @@ public class DatasetAdapter extends BaseAdapter {
         viewHolder.dateText.setText(datasetInfo.getCovertDate());
         viewHolder.operateBtn.setProgress(datasetInfo.getFinished());
 
+        viewHolder.operateBtn.setTag("datasetId_" + datasetInfo.getId());
+
         viewHolder.checkBtn.setVisibility(View.GONE);
         viewHolder.operateBtn.setVisibility(View.VISIBLE);
 
@@ -219,7 +224,7 @@ public class DatasetAdapter extends BaseAdapter {
 
             if (!isZiping(datasetInfo.getId())) {
                 //解压操作
-                new ZipThread(datasetInfo.getId(), datasetInfo.getLink()).start();
+                DownloadService.executorService.execute(new ZipThread(datasetInfo.getId(), datasetInfo.getLink()));
             }
 
         } else if (Utils.STATE_UNZIPED == state) {//解压完成-预览
@@ -368,7 +373,14 @@ public class DatasetAdapter extends BaseAdapter {
         if (info != null) {
             info.setFinished(datasetInfo.getFinished());
 
-            notifyDataSetChanged();
+            try {
+                MyProgressBar bar = (MyProgressBar) gridView.findViewWithTag("datasetId_" + info.getId());
+                if (bar != null) {
+                    bar.setProgress(datasetInfo.getFinished());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -388,7 +400,20 @@ public class DatasetAdapter extends BaseAdapter {
             info.setFinished(datasetInfo.getFinished());
             info.setOperateState(datasetInfo.getOperateState());
 
-            notifyDataSetChanged();
+            try {
+                MyProgressBar bar = (MyProgressBar) gridView.findViewWithTag("datasetId_" + info.getId());
+                if (bar != null) {
+                    bar.setProgress(datasetInfo.getFinished());
+                    bar.setText(context.getString(R.string.decompression_text));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (!isZiping(datasetInfo.getId())) {
+                //解压操作
+                DownloadService.executorService.execute(new ZipThread(info.getId(), info.getLink()));
+            }
         }
     }
 
@@ -445,7 +470,15 @@ public class DatasetAdapter extends BaseAdapter {
 
                     zipingDatasetList.remove(datasetId + "");
 
-                    notifyDataSetChanged();
+                    try {
+                        MyProgressBar bar = (MyProgressBar) gridView.findViewWithTag("datasetId_" + info.getId());
+                        if (bar != null) {
+                            bar.setText(context.getString(R.string.preview_text));
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     mDatasetDao.updateDataset(info);
                     mDatasetDao.updateDatasetSize(datasetId, info.getSize());

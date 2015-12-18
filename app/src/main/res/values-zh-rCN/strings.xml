@@ -29,21 +29,22 @@
     <string name="password_text">密码</string>
     <string name="remember_name_text">记住用户名和密码</string>
     <string name="scanning_tip_text">请扫描证件上QR code</string>
-    <string name="scanning_fail_text">扫描失败！</string>
+    <string name="scanning_fail_text">扫描失败。</string>
 
     <string name="logout_text">登出</string>
     <string name="logout_tip_text">确定退出登录？</string>
 
     <string name="login_waiting">请稍后...</string>
-    <string name="user_or_psd_is_empty">用户名和密码不能为空！</string>
-    <string name="user_or_psd_is_incorrect">用户名或密码不正确！</string>
-    <string name="login_success">登入成功！</string>
+    <string name="user_or_psd_is_empty">用户名和密码不能为空。</string>
+    <string name="user_or_psd_is_incorrect">登入失败，请检查用户名和密码都正确。</string>
+    <string name="network_not_connection">登入失败，请检测网络是否可用，并确保输入的学校编号是正确的。</string>
+    <string name="login_success">登入成功。</string>
 
-    <string name="load_all_text">所有数据加载完毕！</string>
-    <string name="empty_tip_text">数据为空！</string>
-    <string name="network_not_connected">网络未连接，请检查网络！</string>
+    <string name="load_all_text">所有数据加载完毕。</string>
+    <string name="empty_tip_text">数据为空</string>
+    <string name="network_not_connected">网络未连接，请检查网络。</string>
 
-    <string name="press_again_to_quit">再按一次，退出程序！</string>
+    <string name="press_again_to_quit">再按一次，退出程序。</string>
 
     <string name="cancel_text">取消</string>
     <string name="sure_text">确定</string>
@@ -55,18 +56,18 @@
     <string name="delete_all_text">刪除所有</string>
     <string name="selected_size_text">选中大小 </string>
     <string name="back_text">返回</string>
-    <string name="no_subject_selected_text">请选择需要删除的对象！</string>
+    <string name="no_subject_selected_text">请选择需要删除的对象。</string>
     <string name="deleted_text">已删除</string>
     <string name="delete_all_the_selected_Apps">删除所有选中的课件？</string>
     <string name="delete_all_tip_text">删除所有已下载的课件？</string>
 
     <string name="install_app_first">请先安装 %s 应用程序！</string>
-    <string name="file_not_exist">%s文件不存在，请确保SD卡中存在该文件！</string>
+    <string name="file_not_exist">%s文件不存在，请确保SD卡中存在该文件。</string>
 
     <string name="config_text">配置</string>
     <string name="config_title_text">系统配置</string>
     <string name="save_and_return_text">储存并退出</string>
-    <string name="save_success_tip">储存成功！</string>
+    <string name="save_success_tip">储存成功。</string>
 
     <string name="sort_text">排序</string>
     <string name="last_modified_time">最后修改时间</string>

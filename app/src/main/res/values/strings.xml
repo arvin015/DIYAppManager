@@ -28,21 +28,22 @@
     <string name="password_text">密碼</string>
     <string name="remember_name_text">記住用戶名和密碼</string>
     <string name="scanning_tip_text">請掃描證件上QR code</string>
-    <string name="scanning_fail_text">掃描失敗！</string>
+    <string name="scanning_fail_text">掃描失敗。</string>
 
     <string name="logout_text">登出</string>
     <string name="logout_tip_text">確定退出登入？</string>
 
     <string name="login_waiting">請稍後...</string>
-    <string name="user_or_psd_is_empty">用戶名和密碼不能為空！</string>
-    <string name="user_or_psd_is_incorrect">用戶名或密碼不正確！</string>
-    <string name="login_success">登入成功！</string>
+    <string name="user_or_psd_is_empty">用戶名和密碼不能為空。</string>
+    <string name="user_or_psd_is_incorrect">登入失敗，請檢查用戶名和密碼都正確。</string>
+    <string name="network_not_connection_tip">登入失敗，請檢查網絡是否可用，并確保輸入的學校編號是正確的。</string>
+    <string name="login_success">登入成功。</string>
 
-    <string name="load_all_text">所有數據加載完畢！</string>
-    <string name="empty_tip_text">數據為空！</string>
-    <string name="network_not_connected">網絡未連接，請檢查網絡！</string>
+    <string name="load_all_text">所有數據加載完畢。</string>
+    <string name="empty_tip_text">數據為空</string>
+    <string name="network_not_connected">網絡未連接，請檢查網絡。</string>
 
-    <string name="press_again_to_quit">再按一次，退出程序！</string>
+    <string name="press_again_to_quit">再按一次，退出程序。</string>
 
     <string name="cancel_text">取消</string>
     <string name="sure_text">確定</string>
@@ -54,18 +55,18 @@
     <string name="delete_all_text">刪除所有</string>
     <string name="selected_size_text">選中大小 </string>
     <string name="back_text">返回</string>
-    <string name="no_subject_selected_text">請選擇需要刪除的對象！</string>
+    <string name="no_subject_selected_text">請選擇需要刪除的對象。</string>
     <string name="deleted_text">已刪除 </string>
     <string name="delete_all_the_selected_Apps">刪除所有選中的課件？</string>
     <string name="delete_all_tip_text">刪除所有已下載的課件？</string>
 
-    <string name="install_app_first">請先安裝 %s 應用程序！</string>
-    <string name="file_not_exist">%s文件不存在，請確保SD卡中存在該dataset！</string>
+    <string name="install_app_first">請先安裝 %s 應用程序。</string>
+    <string name="file_not_exist">%s文件不存在，請確保SD卡中存在該dataset。</string>
 
     <string name="config_text">配置</string>
     <string name="config_title_text">系統配置</string>
     <string name="save_and_return_text">儲存并退出</string>
-    <string name="save_success_tip">儲存成功！</string>
+    <string name="save_success_tip">儲存成功。</string>
 
     <string name="sort_text">排序</string>
     <string name="last_modified_time">最後修改時間</string>

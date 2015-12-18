@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * 
+ *
  * @author arvin.li
  *
  */

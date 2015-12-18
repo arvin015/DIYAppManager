@@ -202,7 +202,11 @@ public class LoginActivity extends Activity {
 
         if (StringUtil.isEmpty(userName) || StringUtil.isEmpty(psd)) {
             ToastUtil.toastShort(context, getString(R.string.user_or_psd_is_empty));
+            return;
+        }
 
+        if (!NetworkUtil.isNetworkConnected(context)) {
+            ToastUtil.toastShort(context, getString(R.string.network_not_connection_tip));
             return;
         }
 
@@ -237,17 +241,6 @@ public class LoginActivity extends Activity {
         } else {
             ToastUtil.toastShort(context, getString(R.string.user_or_psd_is_incorrect));
         }
-    }
-
-    /**
-     * 获取焦点
-     *
-     * @param v
-     */
-    private void getFocus(View v) {
-        v.hasFocus();
-        v.setFocusableInTouchMode(true);
-        v.setFocusable(true);
     }
 
     /**

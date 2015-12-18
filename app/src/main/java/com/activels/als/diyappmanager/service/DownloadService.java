@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.util.Log;
 
 import com.activels.als.diyappmanager.db.DatasetDao;
 import com.activels.als.diyappmanager.db.DatasetDaoImpl;
@@ -41,8 +40,8 @@ public class DownloadService extends Service {
 
     private Map<Integer, DownloadTask> downloadTasks = new ConcurrentHashMap<>();//文件下载任务哈希集合
 
-    //    public static ExecutorService executorService = Executors.newCachedThreadPool();//带缓存的线程池
-    public static ExecutorService executorService = Executors.newFixedThreadPool(6);//最多6个线程并发，多余的排队等待
+    public static ExecutorService executorService = Executors.newCachedThreadPool();//带缓存的线程池
+//    public static ExecutorService executorService = Executors.newFixedThreadPool(6);//最多6个线程并发，多余的排队等待
 
     private Handler handler = new Handler() {
         @Override
