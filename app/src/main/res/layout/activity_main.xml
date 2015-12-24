@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,87 +12,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#E0E0E0">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical">
-
-                <RelativeLayout
-                    android:id="@+id/searchLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/search_shape"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="8dp">
-
-                    <EditText
-                        android:id="@+id/searchEdit"
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="@string/search_app_text"
-                        android:paddingLeft="35dp"
-                        android:singleLine="true"
-                        android:textColor="#000000" />
-
-                    <ImageView
-                        android:id="@+id/searchImg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/search_icon" />
-
-                </RelativeLayout>
-
-                <Button
-                    android:id="@+id/typeBtn"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/all_app_types"
-                    android:textColor="#0000FF"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_text"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <Button
-                    android:id="@+id/sortBtn"
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/last_modified_time"
-                    android:textColor="#000FFF"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
 
             <com.activels.als.diyappmanager.pulltorefresh.view.PullToRefreshGridView
                 android:id="@+id/refreshGridView"
@@ -137,6 +59,6 @@
         </com.activels.als.diyappmanager.view.CommonScrollView>
     </LinearLayout>
 
-    <include layout="@layout/common_delete" />
+    <!--<include layout="@layout/common_delete" />-->
 
 </FrameLayout>

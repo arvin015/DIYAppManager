@@ -1,6 +1,7 @@
 package com.activels.als.diyappmanager.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +63,11 @@ public class TypeAdapter extends BaseAdapter {
         viewHolder.textView.setText(contents[i]);
 
         if (selectedIndex == i) {
+            viewHolder.textView.setTextColor(context.getResources().getColor(R.color.selected_blue_color));
             viewHolder.imageView.setVisibility(View.VISIBLE);
         } else {
             viewHolder.imageView.setVisibility(View.GONE);
+            viewHolder.textView.setTextColor(Color.BLACK);
         }
 
         return view;

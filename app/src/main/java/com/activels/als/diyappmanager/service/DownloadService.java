@@ -8,8 +8,6 @@ import android.os.Message;
 
 import com.activels.als.diyappmanager.db.DatasetDao;
 import com.activels.als.diyappmanager.db.DatasetDaoImpl;
-import com.activels.als.diyappmanager.db.ThreadDao;
-import com.activels.als.diyappmanager.db.ThreadDaoImpl;
 import com.activels.als.diyappmanager.entity.DatasetInfo;
 import com.activels.als.diyappmanager.utils.Utils;
 
@@ -36,7 +34,7 @@ public class DownloadService extends Service {
     private static final int GET_SUCCESS = 10000;
 
     private DatasetDao mDatasetDao = new DatasetDaoImpl(this);
-    private ThreadDao mThreadDao = new ThreadDaoImpl(this);//ver 1
+//ver2    private ThreadDao mThreadDao = new ThreadDaoImpl(this);
 
     private Map<Integer, DownloadTask> downloadTasks = new ConcurrentHashMap<>();//文件下载任务哈希集合
 
@@ -148,9 +146,9 @@ public class DownloadService extends Service {
 
         downloadTasks.clear();
 
-        //ver 1 删除所有下载记录
-        if (mThreadDao != null)
-            mThreadDao.deleteAllThread();
+//ver2        //删除所有下载记录
+//        if (mThreadDao != null)
+//            mThreadDao.deleteAllThread();
 
     }
 

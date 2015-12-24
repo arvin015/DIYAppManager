@@ -1,48 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@color/viewbgcolor"
+    android:layout_height="77dp"
+    android:background="@drawable/frbg_pa01_"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/refreshBtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginLeft="5dp"
-        android:background="@drawable/refresh_icon" />
-
-    <TextView
-        android:id="@+id/appTitle"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/b04_pa01_back_01"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/searchEdit"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/frbg_search_01"
+            android:hint="@string/search_app_text"
+            android:paddingLeft="25dp"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/typeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:drawableRight="@drawable/b04_pa01_more_01"
+            android:text="@string/all_app_types"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:shadowColor="#ff000000"
-        android:shadowRadius="5.0"
-        android:text="@string/app_name"
-        android:textColor="#ffffff"
-        android:textSize="38sp" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="#ff000000"
+            android:shadowRadius="5.0"
+            android:text="@string/app_name"
+            android:textColor="#ffffff"
+            android:textSize="38sp" />
+
+        <TextView
+            android:id="@+id/selectedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="15dp">
+
+        <Button
+            android:id="@+id/refreshBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/b04_pa01_reflash_01" />
+
+        <Button
+            android:id="@+id/trashBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/b04_pa01_trash_01"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/manageBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/manage_text" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/b04_pa01_manage_01" />
+
+        <Button
+            android:id="@+id/sortBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/b04_pa01_ordering_01" />
 
         <Button
             android:id="@+id/logoutBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="@string/logout_text" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/b04_pa01_login_01" />
 
     </LinearLayout>
-
 </FrameLayout>

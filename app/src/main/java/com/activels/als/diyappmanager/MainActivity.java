@@ -1,9 +1,7 @@
 package com.activels.als.diyappmanager;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +13,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.activels.als.diyappmanager.adapter.DatasetAdapter;
@@ -33,6 +31,7 @@ import com.activels.als.diyappmanager.pulltorefresh.lib.PullToRefreshBase;
 import com.activels.als.diyappmanager.pulltorefresh.view.PullToRefreshGridView;
 import com.activels.als.diyappmanager.service.DownloadService;
 import com.activels.als.diyappmanager.uihelper.BatchDeleteHelper;
+import com.activels.als.diyappmanager.uihelper.ConfirmDialogHelper;
 import com.activels.als.diyappmanager.uihelper.WaitDialogHelper;
 import com.activels.als.diyappmanager.utils.DisplayUtil;
 import com.activels.als.diyappmanager.utils.FileUtils;
@@ -62,10 +61,9 @@ public class MainActivity extends BaseActivity {
 
     private PullToRefreshGridView pullToRefreshGridView;
     private EditText searchEdit;
-    private Button typeBtn, sortBtn, refreshBtn, manageBtn, logoutBtn;
+    private Button backBtn, typeBtn, sortBtn, refreshBtn, manageBtn, trashBtn, logoutBtn;
     private GridView downloadedGridView, gridView;
-    private TextView emptyTipText;
-    private RelativeLayout searchLayout;
+    private TextView emptyTipText, selectedText;
 
     private ProgressDialog pDialog;
 
@@ -104,6 +102,7 @@ public class MainActivity extends BaseActivity {
     private int mode = 0;//0:一般模式; 1:删除模式
     private BatchDeleteHelper batchDeleteHelper;
     private WaitDialogHelper waitDialog;
+    private ConfirmDialogHelper dialog;
 
     private Set<DatasetInfo> infoList = new LinkedHashSet<>();
 
@@ -136,16 +135,25 @@ public class MainActivity extends BaseActivity {
 
         pullToRefreshGridView = (PullToRefreshGridView) findViewById(R.id.refreshGridView);
         searchEdit = (EditText) findViewById(R.id.searchEdit);
+        backBtn = (Button) findViewById(R.id.backBtn);
         typeBtn = (Button) findViewById(R.id.typeBtn);
         sortBtn = (Button) findViewById(R.id.sortBtn);
+        trashBtn = (Button) findViewById(R.id.trashBtn);
         refreshBtn = (Button) findViewById(R.id.refreshBtn);
         manageBtn = (Button) findViewById(R.id.manageBtn);
         logoutBtn = (Button) findViewById(R.id.logoutBtn);
         emptyTipText = (TextView) findViewById(R.id.emptyTipText);
         downloadedGridView = (GridView) findViewById(R.id.downloadedGridView);
-        searchLayout = (RelativeLayout) findViewById(R.id.searchLayout);
+        selectedText = (TextView) findViewById(R.id.selectedText);
 
         initPullRefreshGridView();
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDeleteMode();
+            }
+        });
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,7 +241,7 @@ public class MainActivity extends BaseActivity {
 
                         downloadedAdapter.setItemChecked(i, !info.isChecked());
 
-                        float size = Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("M")));
+                        float size = Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("k")));
                         batchDeleteHelper.countSize(info.isChecked() ? size : -(size));
                     }
                 }
@@ -299,6 +307,10 @@ public class MainActivity extends BaseActivity {
 
         mode = 1;
 
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) typeBtn.getLayoutParams();
+        params.leftMargin = DisplayUtil.dip2px(25);
+
+        setDeleteModeBtnVisibility(View.VISIBLE);
         setBtnVisibility(View.GONE);
 
         downloadedGridView.setVisibility(View.VISIBLE);
@@ -307,19 +319,6 @@ public class MainActivity extends BaseActivity {
         if (batchDeleteHelper == null) {
             batchDeleteHelper = new BatchDeleteHelper(context, mainView);
             batchDeleteHelper.setListener(new BatchDeleteHelper.IDeleteHelperListener() {
-                @Override
-                public void onBackClick() {
-                    exitDeleteMode();
-                }
-
-                @Override
-                public void onSelectAllClick(boolean isChecked) {
-                    for (DatasetInfo info : downloadedDatasetList) {
-                        info.setIsChecked(isChecked);
-                    }
-
-                    downloadedAdapter.notifyDataSetChanged();
-                }
 
                 @Override
                 public void onDeleteClick() {
@@ -332,7 +331,6 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
-        batchDeleteHelper.setDeleteBarVisibility(View.VISIBLE);
 
         if (downloadedDatasetList == null) {
             downloadedDatasetList = new ArrayList<>();
@@ -366,6 +364,10 @@ public class MainActivity extends BaseActivity {
 
         mode = 0;
 
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) typeBtn.getLayoutParams();
+        params.leftMargin = DisplayUtil.dip2px(10);
+
+        setDeleteModeBtnVisibility(View.GONE);
         emptyTipText.setVisibility(View.GONE);
         setBtnVisibility(View.VISIBLE);
 
@@ -378,21 +380,41 @@ public class MainActivity extends BaseActivity {
 
         datasetAdapter.downloadCompletedBatch(infoList);//批处理已经下载完成的
 
-        batchDeleteHelper.setDeleteBarVisibility(View.GONE);
-
         updateTypeAndSort();
     }
 
     /**
-     * 按钮显示隐藏
+     * 一般模式按钮显示隐藏
      *
      * @param visibility
      */
     private void setBtnVisibility(int visibility) {
-        searchLayout.setVisibility(visibility);
+        searchEdit.setVisibility(visibility);
         logoutBtn.setVisibility(visibility);
         manageBtn.setVisibility(visibility);
         refreshBtn.setVisibility(visibility);
+    }
+
+    /**
+     * 删除模式按钮显示隐藏
+     *
+     * @param visibility
+     */
+    private void setDeleteModeBtnVisibility(int visibility) {
+        selectedText.setVisibility(visibility);
+        backBtn.setVisibility(visibility);
+        trashBtn.setVisibility(visibility);
+    }
+
+    /**
+     * 按钮是否可操作
+     *
+     * @param enabled
+     */
+    private void setTypeAndSortEnabled(boolean enabled) {
+        typeBtn.setEnabled(enabled);
+        sortBtn.setEnabled(enabled);
+        trashBtn.setEnabled(enabled);
     }
 
     /**
@@ -401,13 +423,17 @@ public class MainActivity extends BaseActivity {
     private void updateTypeAndSort() {
         if (mode == 0) {//一般模式
             typeBtn.setText(getResources().getStringArray(R.array.type_arr)[selectTypeIndex]);
-            sortBtn.setText(getResources().getStringArray(R.array.sort_arr)[selectSortIndex]);
+            sortBtn.setBackgroundResource(selectSortIndex == 0 ?
+                    R.drawable.b04_pa01_ordering_01 : R.drawable.b04_pa01_ordering_02);
+
+            setTypeAndSortEnabled(true);
+
         } else {//删除模式
             dSelectSortIndex = 0;
             dSelectTypeIndex = 0;
 
             typeBtn.setText(getResources().getStringArray(R.array.type_arr)[0]);
-            sortBtn.setText(getResources().getStringArray(R.array.sort_arr)[0]);
+            sortBtn.setBackgroundResource(R.drawable.b04_pa01_ordering_01);
         }
     }
 
@@ -416,30 +442,31 @@ public class MainActivity extends BaseActivity {
      */
     private void logoutHandle() {
 
-        new AlertDialog.Builder(context).setMessage(getString(R.string.logout_tip_text))
-                .setPositiveButton(getString(R.string.sure_text), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        showDialog(getString(R.string.login_waiting));
+        if (dialog == null) {
+            dialog = new ConfirmDialogHelper(context);
+            dialog.setBtnPressListener(new ConfirmDialogHelper.BtnPressListener() {
+                @Override
+                public void onYesBtnPressed() {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
+                            closeDialog();
 
-                                closeDialog();
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            intent.putExtra("isFirst", false);
+                            startActivity(intent);
 
-                                Intent intent = new Intent(context, LoginActivity.class);
-                                intent.putExtra("isFirst", false);
-                                startActivity(intent);
+                            spfu.saveSharedPreferences(Utils.AUTO_LOGIN, false);
 
-                                spfu.saveSharedPreferences(Utils.AUTO_LOGIN, false);
-
-                                finish();
-                            }
-                        }, 1000);
-
-                    }
-                }).setNegativeButton(getString(R.string.cancel_text), null).show();
+                            finish();
+                        }
+                    }, 1000);
+                }
+            });
+            dialog.setDialogText(context.getString(R.string.logout_tip_text));
+        }
+        dialog.show();
     }
 
     /**
@@ -574,7 +601,7 @@ public class MainActivity extends BaseActivity {
         }
 
         waitDialog.updateMessage(getString(R.string.deleted_text) +
-                "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")");
+                "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")...");
         waitDialog.setListener(new WaitDialogHelper.IWaitDialogHelper() {
             @Override
             public void close() {
@@ -587,6 +614,10 @@ public class MainActivity extends BaseActivity {
                 //全部删除了，则提示数据为空
                 if (downloadedDatasetList.size() < 1) {
                     emptyTipText.setVisibility(View.VISIBLE);
+                    setTypeAndSortEnabled(false);
+                } else {
+                    emptyTipText.setVisibility(View.GONE);
+                    setTypeAndSortEnabled(true);
                 }
 
                 downloadedAdapter.notifyDataSetChanged();
@@ -688,9 +719,10 @@ public class MainActivity extends BaseActivity {
 
         popup = PopupWindowUtil.getInstance();
         popup.setPopupWindowSize(DisplayUtil.dip2px(300),
-                type == 1 ? DisplayUtil.dip2px(280) : DisplayUtil.dip2px(100));
+                type == 1 ? DisplayUtil.dip2px(245) : DisplayUtil.dip2px(160));
 
         View view = LayoutInflater.from(context).inflate(R.layout.popup_type, null);
+        LinearLayout popupContainer = (LinearLayout) view.findViewById(R.id.popupContainer);
         final ListView listView = (ListView) view.findViewById(R.id.typeList);
         TextView popupTitle = (TextView) view.findViewById(R.id.popupTitle);
 
@@ -698,10 +730,18 @@ public class MainActivity extends BaseActivity {
         listView.setAdapter(typeAdapter);
 
         if (type == 2) {
-            popupTitle.setVisibility(View.GONE);
             typeAdapter.setSelectedIndex(mode == 0 ? selectSortIndex : dSelectSortIndex);
+            if (mode == 0)
+                popupContainer.setBackgroundResource(R.drawable.frbg_pa_popup_04);
+            else
+                popupContainer.setBackgroundResource(R.drawable.frbg_pa_popup_03);
+
+            popupContainer.setPadding(DisplayUtil.dip2px(20), DisplayUtil.dip2px(20),
+                    DisplayUtil.dip2px(10), DisplayUtil.dip2px(10));
         } else {
+            popupTitle.setVisibility(View.GONE);
             typeAdapter.setSelectedIndex(mode == 0 ? selectTypeIndex : dSelectTypeIndex);
+            popupContainer.setBackgroundResource(R.drawable.frbg_pa_popup_01);
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -723,6 +763,9 @@ public class MainActivity extends BaseActivity {
                         if (dSelectTypeIndex == i)
                             return;
 
+                        if (batchDeleteHelper != null)
+                            batchDeleteHelper.delete = false;
+
                         dSelectTypeIndex = i;
 
                         loadDataFromLocal(dSelectTypeIndex);
@@ -737,7 +780,9 @@ public class MainActivity extends BaseActivity {
                         return;
                     }
 
-                    sortBtn.setText(strs[i]);
+                    sortBtn.setBackgroundResource(i == 0 ?
+                            R.drawable.b04_pa01_ordering_01 : R.drawable.b04_pa01_ordering_02);
+
                     if (mode == 0) {
                         selectSortIndex = i;
 
@@ -757,7 +802,7 @@ public class MainActivity extends BaseActivity {
         });
 
         popup.setPopuWindow(view, -1, null);
-        popup.showAsDropDown(v, 0, 0);
+        popup.showAsDropDown(v, type == 1 ? -DisplayUtil.dip2px(60) : 0, 0);
     }
 
     /**
@@ -773,15 +818,17 @@ public class MainActivity extends BaseActivity {
         //对应的分类没有则为空提示
         if (downloadedDatasetList.size() < 1) {
             emptyTipText.setVisibility(View.VISIBLE);
+            setTypeAndSortEnabled(false);
         } else {
             emptyTipText.setVisibility(View.GONE);
+            setTypeAndSortEnabled(true);
         }
 
-        float totalSize = 0;
+        int totalSize = 0;
 
         for (DatasetInfo info : downloadedDatasetList) {
             info.setIsChecked(false);
-            totalSize += Float.parseFloat(info.getSize().substring(0, info.getSize().lastIndexOf("M")));
+            totalSize += Integer.parseInt(info.getSize().substring(0, info.getSize().lastIndexOf("k")));
         }
 
         batchDeleteHelper.totalNum = downloadedDatasetList.size();

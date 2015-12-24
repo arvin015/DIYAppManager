@@ -1,7 +1,6 @@
 package com.activels.als.diyappmanager.entity;
 
 import com.activels.als.diyappmanager.utils.StringUtil;
-import com.activels.als.diyappmanager.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -58,11 +57,11 @@ public class DatasetInfo implements Serializable {
         this.link = json.optString("link");
         this.md5 = json.optString("md5");
         this.totalLength = json.optInt("size");
-        this.size = StringUtil.bytes2mb(json.optInt("size"));
+        this.size = StringUtil.bytes2kb(json.optInt("size"));
         this.zipSize = this.size;
 
         this.typeIndex = json.optInt("type");
-        this.covertDate = StringUtil.convertTimeStumpToDate(date);
+        this.covertDate = StringUtil.convertTimeStumpToDate5(date);
         this.zipDatasetName = link.substring(link.lastIndexOf("/") + 1);
         this.datasetName = zipDatasetName.substring(0, zipDatasetName.lastIndexOf("."));
     }
@@ -80,7 +79,7 @@ public class DatasetInfo implements Serializable {
         this.size = size;
         this.link = link;
 
-        this.covertDate = StringUtil.convertTimeStumpToDate(date);
+        this.covertDate = StringUtil.convertTimeStumpToDate5(date);
         this.zipDatasetName = link.substring(link.lastIndexOf("/") + 1);
         this.datasetName = zipDatasetName.substring(0, zipDatasetName.lastIndexOf("."));
     }

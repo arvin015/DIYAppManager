@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">我的課件</string>
-    <string name="version_name">ALS_DIYAppManager_v0.0.3_b3</string>
+    <string name="version_name">ALS_DIYAppManager_v0.0.5_b5</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">配置</string>
@@ -20,13 +20,14 @@
 
     <string name="app_type_text">課件類別</string>
 
-    <string name="app_title">登入DIY系統</string>
+    <string name="login_title">登入 DIY Tools 課件預覽應用程式</string>
     <string name="scanning_text">掃描QR code</string>
     <string name="QR_code_login">QR code 登入</string>
     <string name="manual_login">手動登入</string>
     <string name="username_text">用戶名稱</string>
     <string name="password_text">密碼</string>
-    <string name="remember_name_text">記住用戶名和密碼</string>
+    <string name="school_code_text">學校編號</string>
+    <string name="remember_name_text">記住登入資料</string>
     <string name="scanning_tip_text">請掃描證件上QR code</string>
     <string name="scanning_fail_text">掃描失敗。</string>
 
@@ -53,19 +54,20 @@
     <string name="select_no_one_text">全不選</string>
     <string name="delete_text">刪除</string>
     <string name="delete_all_text">刪除所有</string>
-    <string name="selected_size_text">選中大小 </string>
+    <string name="selected_size_text">已選課件之檔案總大小：</string>
     <string name="back_text">返回</string>
     <string name="no_subject_selected_text">請選擇需要刪除的對象。</string>
-    <string name="deleted_text">已刪除 </string>
-    <string name="delete_all_the_selected_Apps">刪除所有選中的課件？</string>
+    <string name="deleted_text">正在刪除已下載的課件</string>
+    <string name="delete_all_the_selected_Apps">刪除所有已選的課件？</string>
     <string name="delete_all_tip_text">刪除所有已下載的課件？</string>
 
     <string name="install_app_first">請先安裝 %s 應用程序。</string>
     <string name="file_not_exist">%s文件不存在，請確保SD卡中存在該dataset。</string>
 
     <string name="config_text">配置</string>
-    <string name="config_title_text">系統配置</string>
-    <string name="save_and_return_text">儲存并退出</string>
+    <string name="config_title_text">設定</string>
+    <string name="diy_path_text">DIY Tools 路徑</string>
+    <string name="save_and_return_text">儲存並返回</string>
     <string name="save_success_tip">儲存成功。</string>
 
     <string name="sort_text">排序</string>
@@ -78,8 +80,8 @@
     <string name="msg_abortdlownload_text">是否要停止下載以下課件？</string>
 
     <array name="sort_arr">
-        <item>最近更新日期</item>
-        <item>課件名稱</item>
+        <item>最近更新日期(D)</item>
+        <item>課件名稱(N)</item>
     </array>
 
     <array name="type_arr">

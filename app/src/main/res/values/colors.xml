@@ -10,4 +10,8 @@
     <color name="possible_result_points">#c0ffff00</color>
     <color name="result_view">#b0000000</color>
 
+    <color name="selected_blue_color">#1096DC</color>
+    <color name="noselected_black_color">#000000</color>
+    <color name="noenabled_grey_color">#E0E0E0</color>
+
 </resources>

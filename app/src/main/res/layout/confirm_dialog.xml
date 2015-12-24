@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/frbg_pa_popup_02"
+        android:padding="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dialogText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ff000000"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/subjectText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/selected_blue_color"
+                android:textSize="28sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/yesBtn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/b02_confirm_01_style" />
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/b02_cancel_01_style" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

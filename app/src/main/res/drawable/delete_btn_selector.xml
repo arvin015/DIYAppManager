@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/delete_blue_shape" android:state_enabled="true" />
+    <item android:drawable="@drawable/delete_grey_shape" android:state_enabled="false" />
+</selector>

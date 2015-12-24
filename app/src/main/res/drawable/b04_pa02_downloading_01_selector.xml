@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/b04_pa02_downloading_01c" android:state_pressed="true" />
+    <item android:drawable="@drawable/b04_pa02_downloading_01" android:state_pressed="false" />
+</selector>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -65,6 +66,7 @@ public class DownloadedAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
 
             view = inflater.inflate(R.layout.dataset_item, null);
+            viewHolder.numText = (TextView) view.findViewById(R.id.numText);
             viewHolder.iconImg = (ImageView) view.findViewById(R.id.iconImg);
             viewHolder.nameText = (TextView) view.findViewById(R.id.nameText);
             viewHolder.descText = (TextView) view.findViewById(R.id.descText);
@@ -74,6 +76,7 @@ public class DownloadedAdapter extends BaseAdapter {
             viewHolder.lockBtn = (ImageView) view.findViewById(R.id.lockBtn);
             viewHolder.operateBtn = (MyProgressBar) view.findViewById(R.id.operateBtn);
             viewHolder.checkBtn = (ToggleButton) view.findViewById(R.id.checkBtn);
+            viewHolder.handleBtn = (Button) view.findViewById(R.id.handleBtn);
 
             view.setTag(viewHolder);
 
@@ -84,8 +87,10 @@ public class DownloadedAdapter extends BaseAdapter {
 
         viewHolder.checkBtn.setVisibility(View.VISIBLE);
         viewHolder.operateBtn.setVisibility(View.GONE);
+        viewHolder.handleBtn.setVisibility(View.GONE);
         viewHolder.checkBtn.setChecked(datasetInfo.isChecked());
 
+        viewHolder.numText.setText("" + (i + 1));
         viewHolder.nameText.setText(datasetInfo.getName());
         viewHolder.descText.setText(datasetInfo.getInfo());
         viewHolder.sizeText.setText(datasetInfo.getSize() + "");
@@ -99,9 +104,10 @@ public class DownloadedAdapter extends BaseAdapter {
 
     static class ViewHolder {
         ImageView iconImg, lockBtn;
-        TextView nameText, descText, dateText, typeText, sizeText;
+        TextView numText, nameText, descText, dateText, typeText, sizeText;
         MyProgressBar operateBtn;
         ToggleButton checkBtn;
+        Button handleBtn;
     }
 
     /**

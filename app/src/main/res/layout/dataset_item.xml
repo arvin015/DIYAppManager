@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="138dp"
+        android:layout_weight="50"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="5dp">
 
+        <TextView
+            android:id="@+id/numText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
         <ImageView
             android:id="@+id/iconImg"
             android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:adjustViewBounds="true" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="3"
             android:orientation="vertical">
 
             <TextView
@@ -46,6 +58,7 @@
                     android:id="@+id/descText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:text="小四數學科" />
 
             </LinearLayout>
@@ -65,6 +78,7 @@
                     android:id="@+id/typeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:text="CS" />
 
             </LinearLayout>
@@ -84,37 +98,38 @@
                     android:id="@+id/dateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2015-11-9 23:44:23" />
+                    android:layout_marginLeft="2dp"
+                    android:text="11/09/2015" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/size_text" />
+
+                <TextView
+                    android:id="@+id/sizeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:text="3.6M" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="30dp"
-            android:gravity="bottom"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:text="@string/size_text" />
-
-            <TextView
-                android:id="@+id/sizeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3.6M" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2.1"
             android:gravity="right|center_vertical"
             android:orientation="horizontal"
             android:paddingRight="5dp">
@@ -138,21 +153,34 @@
                 android:textOn=""
                 android:visibility="gone" />
 
+            <Button
+                android:id="@+id/handleBtn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/b04_pa02_download_01_selector" />
+
             <com.activels.als.diyappmanager.view.MyProgressBar
                 android:id="@+id/operateBtn"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="@dimen/progressbar_width"
                 android:layout_height="40dp"
                 android:gravity="center"
-                android:progressDrawable="@drawable/progressbar_style" />
+                android:progressDrawable="@drawable/progressbar_style"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:background="#E0E0E0" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="right">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#E0E0E0" />
+    </LinearLayout>
 
 </LinearLayout>

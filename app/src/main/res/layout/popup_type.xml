@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EFEFEF"
-    android:orientation="vertical">
+    android:background="@drawable/frbg_pa_popup_01"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/popupTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#C0C0C0"
-        android:gravity="center_horizontal"
-        android:padding="8dp"
-        android:text="@string/app_type_text"
-        android:textColor="#000000"
+        android:text="@string/sort_text"
+        android:textColor="#ffbdbdbd"
         android:textSize="20sp" />
 
     <ListView
         android:id="@+id/typeList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="#E0E0E0"
-        android:dividerHeight="1dp" />
+        android:divider="@null" />
 
 </LinearLayout>

@@ -108,6 +108,7 @@ public class StringUtil {
     public final static SimpleDateFormat dateFormater4 = new SimpleDateFormat("yyyyMMdd");
     public static final SimpleDateFormat sdf = new SimpleDateFormat(
             "yyyyMMddHHmmss", Locale.CHINA);
+    public final static SimpleDateFormat dateFormater5 = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * 将字符串转位日期类型
@@ -194,7 +195,14 @@ public class StringUtil {
         } catch (Exception e) {
             return "";
         }
+    }
 
+    public static String convertTimeStumpToDate5(String time) {
+        try {
+            return dateFormater5.format(new Date(toLong(time) * 1000L));
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public static String gettimenow() {
@@ -699,15 +707,13 @@ public class StringUtil {
      */
     public static String bytes2kb(long bytes) {
         BigDecimal filesize = new BigDecimal(bytes);
-        BigDecimal megabyte = new BigDecimal(1024 * 1024);
-        float returnValue = filesize.divide(megabyte, 2, BigDecimal.ROUND_UP)
-                .floatValue();
-        if (returnValue > 1)
-            return (returnValue + "MB");
+//        BigDecimal megabyte = new BigDecimal(1024 * 1024);
+//        float returnValue = filesize.divide(megabyte, 2, BigDecimal.ROUND_UP).floatValue();
+//        if (returnValue > 1)
+//            return (returnValue + "MB");
         BigDecimal kilobyte = new BigDecimal(1024);
-        returnValue = filesize.divide(kilobyte, 2, BigDecimal.ROUND_UP)
-                .floatValue();
-        return (returnValue + "KB");
+        int returnValue = filesize.divide(kilobyte, 0, BigDecimal.ROUND_UP).intValue();
+        return (returnValue + "kb");
     }
 
     /**

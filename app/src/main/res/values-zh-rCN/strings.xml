@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">我的课件</string>
-    <string name="version_name">ALS_DIYAppManager_v0.0.3_b3</string>
+    <string name="version_name">ALS_DIYAppManager_v0.0.5_b5</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">配置</string>
@@ -21,13 +21,14 @@
 
     <string name="app_type_text">课件类别</string>
 
-    <string name="app_title">登入DIY系统</string>
+    <string name="login_title">登入 DIY Tools 课件预览应用程序</string>
     <string name="scanning_text">扫描QR code</string>
     <string name="QR_code_login">QR code 登入</string>
     <string name="manual_login">手动登入</string>
     <string name="username_text">用户名称</string>
     <string name="password_text">密码</string>
-    <string name="remember_name_text">记住用户名和密码</string>
+    <string name="school_code_text">学校编号</string>
+    <string name="remember_name_text">记住登入资料</string>
     <string name="scanning_tip_text">请扫描证件上QR code</string>
     <string name="scanning_fail_text">扫描失败。</string>
 
@@ -37,7 +38,7 @@
     <string name="login_waiting">请稍后...</string>
     <string name="user_or_psd_is_empty">用户名和密码不能为空。</string>
     <string name="user_or_psd_is_incorrect">登入失败，请检查用户名和密码都正确。</string>
-    <string name="network_not_connection">登入失败，请检测网络是否可用，并确保输入的学校编号是正确的。</string>
+    <string name="network_not_connection_tip">登入失败，请检测网络是否可用，并确保输入的学校编号是正确的。</string>
     <string name="login_success">登入成功。</string>
 
     <string name="load_all_text">所有数据加载完毕。</string>
@@ -54,19 +55,20 @@
     <string name="select_no_one_text">全不选</string>
     <string name="delete_text">刪除</string>
     <string name="delete_all_text">刪除所有</string>
-    <string name="selected_size_text">选中大小 </string>
+    <string name="selected_size_text">已选课件之档案总大小: </string>
     <string name="back_text">返回</string>
     <string name="no_subject_selected_text">请选择需要删除的对象。</string>
-    <string name="deleted_text">已删除</string>
-    <string name="delete_all_the_selected_Apps">删除所有选中的课件？</string>
+    <string name="deleted_text">正在删除已下载的课件</string>
+    <string name="delete_all_the_selected_Apps">删除所有已选的课件？</string>
     <string name="delete_all_tip_text">删除所有已下载的课件？</string>
 
     <string name="install_app_first">请先安装 %s 应用程序！</string>
     <string name="file_not_exist">%s文件不存在，请确保SD卡中存在该文件。</string>
 
     <string name="config_text">配置</string>
-    <string name="config_title_text">系统配置</string>
-    <string name="save_and_return_text">储存并退出</string>
+    <string name="config_title_text">设定</string>
+    <string name="diy_path_text">DIY Tools 路径</string>
+    <string name="save_and_return_text">储存并返回</string>
     <string name="save_success_tip">储存成功。</string>
 
     <string name="sort_text">排序</string>

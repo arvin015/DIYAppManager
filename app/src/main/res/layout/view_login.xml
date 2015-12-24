@@ -17,7 +17,7 @@
             android:gravity="center"
             android:shadowColor="#ff000000"
             android:shadowRadius="5"
-            android:text="@string/app_title"
+            android:text="@string/login_title"
             android:textColor="#FFFFFF"
             android:textSize="38sp" />
 
@@ -193,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/login_manual_school_box"
+                        android:hint="@string/school_code_text"
                         android:paddingLeft="55dp"
                         android:singleLine="true"
                         android:text="developmentschool01"

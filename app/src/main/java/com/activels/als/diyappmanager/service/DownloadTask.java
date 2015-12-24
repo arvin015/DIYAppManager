@@ -3,8 +3,6 @@ package com.activels.als.diyappmanager.service;
 import android.content.Context;
 import android.content.Intent;
 
-import com.activels.als.diyappmanager.db.ThreadDao;
-import com.activels.als.diyappmanager.db.ThreadDaoImpl;
 import com.activels.als.diyappmanager.entity.DatasetInfo;
 import com.activels.als.diyappmanager.entity.ThreadInfo;
 import com.activels.als.diyappmanager.utils.Utils;
@@ -29,7 +27,7 @@ public class DownloadTask {
 
     public DatasetInfo datasetInfo;
 
-    private ThreadDao mThreadDao;
+//ver2   private ThreadDao mThreadDao;
 
     private int finished = 0;//下载完成进度
 
@@ -48,7 +46,8 @@ public class DownloadTask {
         this.threadNum = threadNum;
         this.listener = listener;
 
-        mThreadDao = new ThreadDaoImpl(context);
+        threadList = new ArrayList<>();
+//ver2        mThreadDao = new ThreadDaoImpl(context);
     }
 
     //下载处理
@@ -58,33 +57,33 @@ public class DownloadTask {
         isPause = false;
 
         //获取该URL的所有下载任务
-        threadList = mThreadDao.queryThread(datasetInfo.getLink());
+//ver2        threadList = mThreadDao.queryThread(datasetInfo.getLink());
 
         ThreadInfo threadInfo = null;
 
-        if (threadList.size() == 0) {//第一次下载
+//ver2        if (threadList.size() == 0) {//第一次下载
 
-            int perLength = datasetInfo.getTotalLength() / threadNum;//每个线程下载长度
+        int perLength = datasetInfo.getTotalLength() / threadNum;//每个线程下载长度
 
-            //创建多个线程信息
-            for (int i = 0; i < threadNum; i++) {
+        //创建多个线程信息
+        for (int i = 0; i < threadNum; i++) {
 
-                int start = i * perLength;
-                int end = (i + 1) * perLength - 1;
+            int start = i * perLength;
+            int end = (i + 1) * perLength - 1;
 
-                threadInfo = new ThreadInfo(i, datasetInfo.getLink(), start, end, 0);
+            threadInfo = new ThreadInfo(i, datasetInfo.getLink(), start, end, 0);
 
-                //最后一个线程设置下载到最后，解决除不尽的问题
-                if (i == threadNum - 1) {
-                    threadInfo.setEnd(datasetInfo.getTotalLength());
-                }
-
-                threadList.add(threadInfo);
-
-                mThreadDao.insertThread(threadInfo);//把每个下载线程保存到数据库
-
+            //最后一个线程设置下载到最后，解决除不尽的问题
+            if (i == threadNum - 1) {
+                threadInfo.setEnd(datasetInfo.getTotalLength());
             }
+
+            threadList.add(threadInfo);
+
+//ver2                mThreadDao.insertThread(threadInfo);//把每个下载线程保存到数据库
+
         }
+//        }
 
         //启动所有线程下载
         if (threadList != null && threadList.size() > 0) {
@@ -183,21 +182,21 @@ public class DownloadTask {
 
                         threadInfo.setFinished(threadInfo.getFinished() + len);//累加该线程下载进度
 
-                        if (System.currentTimeMillis() - lastTime > 1500) {
-
-                            datasetInfo.setFinished(finished * 100 / datasetInfo.getTotalLength());
-
-                            //1.5秒发送一次广播通知Activity更新下载进度
-                            intent.putExtra("dataset", datasetInfo);
-
-                            context.sendBroadcast(intent);
-
-                            lastTime = System.currentTimeMillis();
-                        }
+//ver2                        if (System.currentTimeMillis() - lastTime > 1500) {
+//
+//                            datasetInfo.setFinished(finished * 100 / datasetInfo.getTotalLength());
+//
+//                            //1.5秒发送一次广播通知Activity更新下载进度
+//                            intent.putExtra("dataset", datasetInfo);
+//
+//                            context.sendBroadcast(intent);
+//
+//                            lastTime = System.currentTimeMillis();
+//                        }
 
                         if (isPause) {//停止下载
 
-                            mThreadDao.updateProgress(threadInfo.getId(), threadInfo.getUrl(), threadInfo.getFinished());//保存下载进度到数据库
+//ver2                            mThreadDao.updateProgress(threadInfo.getId(), threadInfo.getUrl(), threadInfo.getFinished());//保存下载进度到数据库
 
                             return;
                         }
@@ -219,7 +218,7 @@ public class DownloadTask {
                         intent1.putExtra("dataset", datasetInfo);
                         context.sendBroadcast(intent1);
                         //删除该文件的相关下载任务
-                        mThreadDao.deleteThread(datasetInfo.getLink());
+//ver2                        mThreadDao.deleteThread(datasetInfo.getLink());
                     }
 
                 }
