@@ -18,6 +18,8 @@ public class ConfirmDialogHelper {
     private Context context;
     private Dialog confirmDialog;
 
+    private Button yesBtn, cancelBtn;
+
     public ConfirmDialogHelper(Context context) {
         this.context = context;
 
@@ -28,8 +30,8 @@ public class ConfirmDialogHelper {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(DisplayUtil.dip2px(400),
                 DisplayUtil.dip2px(260));
 
-        Button yesBtn = (Button) view.findViewById(R.id.yesBtn);
-        Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
+        yesBtn = (Button) view.findViewById(R.id.yesBtn);
+        cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
 
         yesBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -64,6 +66,10 @@ public class ConfirmDialogHelper {
         subjectText.setVisibility(View.VISIBLE);
 
         subjectText.setText(Html.fromHtml(str));
+    }
+
+    public void hideCancelBtn() {
+        cancelBtn.setVisibility(View.GONE);
     }
 
     public void show() {

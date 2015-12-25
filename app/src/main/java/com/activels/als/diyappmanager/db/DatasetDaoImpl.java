@@ -37,8 +37,8 @@ public class DatasetDaoImpl implements DatasetDao {
     @Override
     public synchronized void updateDataset(DatasetInfo datasetInfo) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("update dataset_info set finished=?, state=? where dataset_id=?", new Object[]{datasetInfo.getFinished(),
-                datasetInfo.getOperateState(), datasetInfo.getId()});
+        db.execSQL("update dataset_info set finished=?, state=?, size=? where dataset_id=?", new Object[]{datasetInfo.getFinished(),
+                datasetInfo.getOperateState(), datasetInfo.getSize(), datasetInfo.getId()});
 //        db.close();
     }
 

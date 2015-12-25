@@ -48,13 +48,13 @@
                 android:id="@+id/yesBtn"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginRight="50dp"
                 android:background="@drawable/b02_confirm_01_style" />
 
             <Button
                 android:id="@+id/cancelBtn"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
                 android:background="@drawable/b02_cancel_01_style" />
         </LinearLayout>
     </FrameLayout>

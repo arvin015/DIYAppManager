@@ -3,6 +3,10 @@ com.activels.als.diyappmanager readme 2015/11/15
 Version 1.0 programmed by Arvin
 =============================================
 
+Ver 0.0.6 Build 6 2015/12/25 Arvin
+- Fixed: 文字更换
+- Fixed: 进入删除模式并退出后，有些下载中的dataset无法下载完成
+
 Ver 0.0.5 Build 5 2015/12/24 Arvin
 - Fixed: 更换图片
 

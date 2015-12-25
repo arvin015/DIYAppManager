@@ -33,7 +33,7 @@ public class Utils {
     public static final int STATE_UNZIPED = 3;//解压完成，预览
     public static final int STATE_UPDATE = 4;//需更新，更新
 
-    public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/downloads";
+    public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/diymanager/.downloads";
 
 //    public static final String[] TYPES = new String[]{"All App Types", "eBook",
 //            "Draw Something", "Card Send", "Video Quiz"};

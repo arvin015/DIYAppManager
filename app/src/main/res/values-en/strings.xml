@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">My DIY Apps</string>
-    <string name="version_name">ALS_DIYAppManager_v0.0.5_b5</string>
+    <string name="version_name">ALS_DIYAppManager_v0.0.6_b6</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Config</string>
@@ -16,19 +16,19 @@
     <string name="update_text">UPDATE</string>
     <string name="preview_text">PREVIEW</string>
     <string name="downloading_text">DOWNLOADING</string>
-    <string name="decompression_text">Decompression</string>
+    <string name="decompression_text">EXTRACTING</string>
 
-    <string name="loadmore_text">load More...</string>
+    <string name="loadmore_text">Load More…</string>
 
     <string name="app_type_text">App Type</string>
 
     <string name="login_title">Login to DIY Tools Preview Apps</string>
     <string name="scanning_text">Scanning QR code</string>
     <string name="QR_code_login">QR code Login</string>
-    <string name="manual_login">Manual Login</string>
-    <string name="username_text">username</string>
-    <string name="password_text">password</string>
-    <string name="school_code_text">school code</string>
+    <string name="manual_login">Login</string>
+    <string name="username_text">User ID</string>
+    <string name="password_text">Password</string>
+    <string name="school_code_text">School code</string>
     <string name="remember_name_text">Remember login credentials</string>
     <string name="scanning_tip_text">Please scan the QR code</string>
     <string name="scanning_fail_text">Scan Fail!</string>
@@ -40,6 +40,7 @@
     <string name="user_or_psd_is_empty">User name and Password can not be empty.</string>
     <string name="user_or_psd_is_incorrect">Login failed. Please check whether your login name and password are correct.</string>
     <string name="network_not_connection_tip">Login failed. Please check your network connection and if you have input the correct School Code.</string>
+    <string name="login_student_tip">Your account doesn’t have the required rights to use this app.</string>
     <string name="login_success">Login success！</string>
 
     <string name="load_all_text">All data is loaded!</string>
@@ -55,13 +56,14 @@
     <string name="select_all_text">Select All</string>
     <string name="select_no_one_text">Select No One</string>
     <string name="delete_text">Delete Selected</string>
-    <string name="delete_all_text">Delete All</string>
+    <string name="delete_all_text">Delete ALL</string>
     <string name="selected_size_text">Total data size of selected Apps: </string>
     <string name="back_text">Back</string>
     <string name="no_subject_selected_text">Select the object you need to delete.</string>
     <string name="deleted_text">Deleting downloaded Apps </string>
+    <string name="dian_text">…</string>
     <string name="delete_all_the_selected_Apps">Delete all the selected Apps?</string>
-    <string name="delete_all_tip_text">Delete all the downloaded Apps?</string>
+    <string name="delete_all_tip_text">Delete ALL the downloaded Apps?</string>
 
     <string name="install_app_first">Please install the %s application!</string>
     <string name="file_not_exist">The file %s does not exist. Please make sure that the file is in the SD card.</string>
@@ -79,11 +81,11 @@
 
     <string name="msg_nospace_text">There is not enough space to download the chosen app(s). Please tap “Manage Downloaded Apps” to delete some data and try again.</string>
     <string name="msg_dlerror_text">An error was encountered while downloading an app. Please check your network connection, refresh the app list, and try again.</string>
-    <string name="msg_abortdlownload_text">Do you want to stop downloading the following app?</string>
+    <string name="msg_abortdlownload_text">Do you want to abort the download of the below app?</string>
 
     <array name="sort_arr">
-        <item>Last Modified Date(D)</item>
-        <item>App Name(N)</item>
+        <item>Last Modified Date (D)</item>
+        <item>App Name (N)</item>
     </array>
 
     <array name="type_arr">

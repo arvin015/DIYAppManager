@@ -228,9 +228,9 @@ public class DownloadTask {
             } finally {
 
                 try {
-                    conn.disconnect();
                     is.close();
                     bis.close();
+                    conn.disconnect();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

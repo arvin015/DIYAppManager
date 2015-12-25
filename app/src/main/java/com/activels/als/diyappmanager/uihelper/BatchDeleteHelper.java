@@ -132,7 +132,7 @@ public class BatchDeleteHelper {
     public void setCountText() {
         selectedText.setText(context.getString(R.string.selected_size_text)
                 + " " + selectedSize + " kb" +
-                "(" + totalSize + " kb)");
+                " (" + totalSize + " kb)");
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.activels.als.diyappmanager.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +37,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by arvin.li on 2015/11/18.
@@ -58,7 +56,7 @@ public class DatasetAdapter extends BaseAdapter {
     public int currentDeleteId = -1;//当前需要删除的dataset
 
     private DatasetDao mDatasetDao;
-    private ConfirmDialogHelper dialog;
+    private ConfirmDialogHelper dialog, tipDialog;
 
     public DatasetAdapter(Context context, List<DatasetInfo> datasetInfoList,
                           FinalBitmap fBitmap, GridView gridView) {
@@ -328,6 +326,18 @@ public class DatasetAdapter extends BaseAdapter {
     }
 
     /**
+     * 显示消息提示框
+     */
+    private void showTipDialog(String msg) {
+        if (tipDialog == null) {
+            tipDialog = new ConfirmDialogHelper(context);
+            tipDialog.hideCancelBtn();
+        }
+        tipDialog.setDialogText(msg);
+        tipDialog.show();
+    }
+
+    /**
      * 下载处理
      *
      * @param info
@@ -336,20 +346,14 @@ public class DatasetAdapter extends BaseAdapter {
 
         //判断网络是否正常
         if (!NetworkUtil.isNetworkConnected(context)) {
-            new AlertDialog.Builder(context)
-                    .setMessage(context.getString(R.string.msg_dlerror_text))
-                    .setPositiveButton(context.getString(R.string.sure_text), null)
-                    .show();
+            showTipDialog(context.getString(R.string.msg_dlerror_text));
             return;
         }
 
         //判断SD空间是否足够
         float[] block = StringUtil.getBlockFromSD();
         if (info.getTotalLength() > block[0]) {
-            new AlertDialog.Builder(context)
-                    .setMessage(context.getString(R.string.msg_nospace_text))
-                    .setPositiveButton(context.getString(R.string.sure_text), null)
-                    .show();
+            showTipDialog(context.getString(R.string.msg_nospace_text));
             return;
         }
 
@@ -432,25 +436,25 @@ public class DatasetAdapter extends BaseAdapter {
         }
     }
 
-    /**
-     * 下载完成批处理
-     *
-     * @param infoList
-     */
-    public void downloadCompletedBatch(Set<DatasetInfo> infoList) {
-
-        if (infoList.size() > 0) {
-            for (DatasetInfo datasetInfo : infoList) {
-                DatasetInfo info = getDatasetByDatasetId(datasetInfo.getId());
-                if (info != null) {
-                    info.setFinished(100);
-                    info.setOperateState(datasetInfo.getOperateState());
-                }
-            }
-
-            notifyDataSetChanged();
-        }
-    }
+//    /**
+//     * 下载完成批处理
+//     *
+//     * @param infoList
+//     */
+//    public void downloadCompletedBatch(Set<DatasetInfo> infoList) {
+//
+//        if (infoList.size() > 0) {
+//            for (DatasetInfo datasetInfo : infoList) {
+//                DatasetInfo info = getDatasetByDatasetId(datasetInfo.getId());
+//                if (info != null) {
+//                    info.setFinished(100);
+//                    info.setOperateState(datasetInfo.getOperateState());
+//                }
+//            }
+//
+//            notifyDataSetChanged();
+//        }
+//    }
 
     /**
      * 获取dataset
@@ -506,7 +510,7 @@ public class DatasetAdapter extends BaseAdapter {
                     }
 
                     mDatasetDao.updateDataset(info);
-                    mDatasetDao.updateDatasetSize(datasetId, info.getSize());
+//                    mDatasetDao.updateDatasetSize(datasetId, info.getSize());
 
 //                    notifyDataSetChanged();
                 }

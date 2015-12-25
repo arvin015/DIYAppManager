@@ -49,9 +49,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 
 public class MainActivity extends BaseActivity {
@@ -104,7 +102,7 @@ public class MainActivity extends BaseActivity {
     private WaitDialogHelper waitDialog;
     private ConfirmDialogHelper dialog;
 
-    private Set<DatasetInfo> infoList = new LinkedHashSet<>();
+//ver2    private Set<DatasetInfo> infoList = new LinkedHashSet<>();//删除模式时保存下载完成的dataset
 
     private int deleteNum = 0; //当前删除个数
     private int selectNum = 0; //总共需删除个数
@@ -342,7 +340,7 @@ public class MainActivity extends BaseActivity {
         }
         deletedDatasetList.clear();
 
-        infoList.clear();
+//ver2        infoList.clear();
 
         loadDataFromLocal(0);//从本地数据库获取下载完成数据
 
@@ -374,11 +372,10 @@ public class MainActivity extends BaseActivity {
         downloadedGridView.setVisibility(View.GONE);
         pullToRefreshGridView.setVisibility(View.VISIBLE);
 
-        if (deletedDatasetList != null) {
+        if (deletedDatasetList != null) {//更新已被删除的下载完成的dataset
             datasetAdapter.updateData(deletedDatasetList);
         }
-
-        datasetAdapter.downloadCompletedBatch(infoList);//批处理已经下载完成的
+//ver2        datasetAdapter.downloadCompletedBatch(infoList);//批处理已经下载完成的
 
         updateTypeAndSort();
     }
@@ -447,6 +444,9 @@ public class MainActivity extends BaseActivity {
             dialog.setBtnPressListener(new ConfirmDialogHelper.BtnPressListener() {
                 @Override
                 public void onYesBtnPressed() {
+
+                    showDialog(getString(R.string.login_waiting));
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -458,6 +458,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
 
                             spfu.saveSharedPreferences(Utils.AUTO_LOGIN, false);
+
+                            closeDialog();
 
                             finish();
                         }
@@ -601,7 +603,8 @@ public class MainActivity extends BaseActivity {
         }
 
         waitDialog.updateMessage(getString(R.string.deleted_text) +
-                "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")...");
+                "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")"
+                + context.getString(R.string.dian_text));
         waitDialog.setListener(new WaitDialogHelper.IWaitDialogHelper() {
             @Override
             public void close() {
@@ -670,7 +673,8 @@ public class MainActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     waitDialog.updateMessage(getString(R.string.deleted_text) +
-                                            "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")");
+                                            "(" + deleteNum + "/" + (isAll ? downloadedDatasetList.size() : selectNum) + ")"
+                                            + context.getString(R.string.dian_text));
                                 }
                             });
                         }
@@ -983,10 +987,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void downloadCompleted(DatasetInfo datasetInfo) {
-        if (mode == 0)
-            datasetAdapter.downloadCompleted(datasetInfo);
-        else //删除模式时，先保存下载完成的dataset的通知
-            infoList.add(datasetInfo);
+//ver2        if (mode == 0)
+        datasetAdapter.downloadCompleted(datasetInfo);
+//        else {//删除模式时，先保存下载完成的dataset的通知
+//            infoList.add(datasetInfo);
+//        }
     }
 
     @Override
@@ -1014,10 +1019,16 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
 
         clear();
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     /**

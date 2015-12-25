@@ -1,14 +1,14 @@
 <resources>
 
     <string name="app_name">我的课件</string>
-    <string name="version_name">ALS_DIYAppManager_v0.0.5_b5</string>
+    <string name="version_name">ALS_DIYAppManager_v0.0.6_b6</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">配置</string>
 
     <string name="desc_text">描述：</string>
-    <string name="type_text">类型：</string>
-    <string name="date_text">时间：</string>
+    <string name="type_text">课件类型：</string>
+    <string name="date_text">更新日期：</string>
     <string name="size_text">档案大小：</string>
 
     <string name="get_text">下载</string>
@@ -17,16 +17,16 @@
     <string name="downloading_text">下载中</string>
     <string name="decompression_text">解压中</string>
 
-    <string name="loadmore_text">读取更多...</string>
+    <string name="loadmore_text">读取更多……</string>
 
     <string name="app_type_text">课件类别</string>
 
     <string name="login_title">登入 DIY Tools 课件预览应用程序</string>
     <string name="scanning_text">扫描QR code</string>
     <string name="QR_code_login">QR code 登入</string>
-    <string name="manual_login">手动登入</string>
+    <string name="manual_login">登入</string>
     <string name="username_text">用户名称</string>
-    <string name="password_text">密码</string>
+    <string name="password_text">用户密码</string>
     <string name="school_code_text">学校编号</string>
     <string name="remember_name_text">记住登入资料</string>
     <string name="scanning_tip_text">请扫描证件上QR code</string>
@@ -35,10 +35,11 @@
     <string name="logout_text">登出</string>
     <string name="logout_tip_text">确定退出登录？</string>
 
-    <string name="login_waiting">请稍后...</string>
+    <string name="login_waiting">请稍后……</string>
     <string name="user_or_psd_is_empty">用户名和密码不能为空。</string>
-    <string name="user_or_psd_is_incorrect">登入失败，请检查用户名和密码都正确。</string>
-    <string name="network_not_connection_tip">登入失败，请检测网络是否可用，并确保输入的学校编号是正确的。</string>
+    <string name="user_or_psd_is_incorrect">登入失败，请检查用户名称和密码是否正确。</string>
+    <string name="network_not_connection_tip">登入失败，请检查连线状态及学校代号是否已正确输入。</string>
+    <string name="login_student_tip">你的户口没有足够权限使用此应用程序。</string>
     <string name="login_success">登入成功。</string>
 
     <string name="load_all_text">所有数据加载完毕。</string>
@@ -53,12 +54,13 @@
     <string name="manage_text">管理已下载课件</string>
     <string name="select_all_text">全选</string>
     <string name="select_no_one_text">全不选</string>
-    <string name="delete_text">刪除</string>
-    <string name="delete_all_text">刪除所有</string>
+    <string name="delete_text">刪除已选课件</string>
+    <string name="delete_all_text">全部删除</string>
     <string name="selected_size_text">已选课件之档案总大小: </string>
     <string name="back_text">返回</string>
     <string name="no_subject_selected_text">请选择需要删除的对象。</string>
     <string name="deleted_text">正在删除已下载的课件</string>
+    <string name="dian_text">……</string>
     <string name="delete_all_the_selected_Apps">删除所有已选的课件？</string>
     <string name="delete_all_tip_text">删除所有已下载的课件？</string>
 
@@ -66,30 +68,30 @@
     <string name="file_not_exist">%s文件不存在，请确保SD卡中存在该文件。</string>
 
     <string name="config_text">配置</string>
-    <string name="config_title_text">设定</string>
+    <string name="config_title_text">设置</string>
     <string name="diy_path_text">DIY Tools 路径</string>
     <string name="save_and_return_text">储存并返回</string>
     <string name="save_success_tip">储存成功。</string>
 
     <string name="sort_text">排序</string>
-    <string name="last_modified_time">最后修改时间</string>
+    <string name="last_modified_time">最近更新日期(D)</string>
     <string name="search_app_text">搜寻我的课件</string>
     <string name="all_app_types">所有课件类别</string>
 
     <string name="msg_nospace_text">没有足够容量下载所选课件，请点选「管理已下载课件」并删除一些资料后再试。</string>
     <string name="msg_dlerror_text">下载课件时发生错误，请检查连线状况及重新整理课件列表，然后再试。</string>
-    <string name="msg_abortdlownload_text">是否要停止下载以下课件？</string>
+    <string name="msg_abortdlownload_text">确定停止下载以下课件？</string>
 
     <array name="sort_arr">
-        <item>最近更新日期</item>
-        <item>课件名称</item>
+        <item>最近更新日期(D)</item>
+        <item>课件名称(N)</item>
     </array>
 
     <array name="type_arr">
         <item>所有课件类别</item>
         <item>电子书</item>
         <item>手写绘画</item>
-        <item>分组排卡</item>
+        <item>分组派卡</item>
         <item>影视抢答</item>
     </array>
 
